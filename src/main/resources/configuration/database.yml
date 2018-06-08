@@ -1,0 +1,6 @@
+development:
+  userName: postgres
+  password: postgres
+  url: jdbc:postgresql://localhost/godbound_runner
+  driverClassName: org.postgresql.Driver
+

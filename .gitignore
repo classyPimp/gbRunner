@@ -1,0 +1,16 @@
+.gradle
+.idea
+assets/developmentBuild
+assets/node_modules
+nodeModules
+build
+out
+microFramework/build
+orm/build
+gradle
+orm/build
+orm/out
+microFramework/build
+microFramework/out
+src/main/java/org/jooq
+uploads
