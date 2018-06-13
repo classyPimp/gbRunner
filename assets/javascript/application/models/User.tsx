@@ -1,5 +1,6 @@
 import { IModelProperties } from '../../modelLayer/interfaces/IModelProperties';
 import { HasOne } from '../../modelLayer/annotations/HasOne';
+import { HasMany } from '../../modelLayer/annotations/HasMany'
 import { Promise } from 'es6-promise';
 import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute';
 import { Property } from '../../modelLayer/annotations/Property';
@@ -7,6 +8,7 @@ import { BaseModel } from '../../modelLayer/BaseModel';
 import {Account} from './Account'
 import  { ModelRegistry } from '../../modelLayer/ModelRegistry' 
 import { ModelCollection } from '../../modelLayer/ModelCollection'
+import { UserRole } from './UserRole'
 
 export class User extends BaseModel {
    
@@ -18,34 +20,29 @@ export class User extends BaseModel {
     @Property
     name: string
  
-    @Route("POST", {url: "/api/users/create"})
-    create: (options?: RequestOptions) => Promise<any>
 
-    beforeCreateRequest(options: RequestOptions){
-        options.params = this.getPureProperties() 
+    @Route("POST", {url: "/api/user/registration"})
+    registrationCreate: (options?: RequestOptions) => Promise<any>
+
+    beforeRegistrationCreateRequest(options: RequestOptions) {
+      this.beforeCreateRequest(options)
     }
 
-    afterCreateRequest(options: RequestOptions){
-        options.deferredPromise.then((resp)=>{
-            let newUser = new User(resp)
-            newUser.validate()
-            return newUser
-        })
+    afterRegistrationCreateRequest(options?: RequestOptions) {
+      this.afterCreateRequest(options)
     }
 
-    @Route("POST", {url: "/api/sessions"})
+
+
+    @Route("POST", {url: "/api/session"})
     login: (options?: RequestOptions) => Promise<any>
 
     beforeLoginRequest(options: RequestOptions) {
-      options.params = this.getPureProperties()
+      this.beforeCreateRequest(options)
     }
 
     afterLoginRequest(options: RequestOptions) {
-        options.deferredPromise.then((resp)=>{
-            let newUser = new User(resp)
-            newUser.validate()
-            return newUser
-        })
+        this.afterCreateRequest(options)
     }    
 
     @Route("DELETE", {url: "/api/sessions"})
@@ -68,6 +65,9 @@ export class User extends BaseModel {
 
     @HasOne("Account")
     account: Account
+
+    @HasMany("UserRole")
+    userRoles: ModelCollection<UserRole>
 
     nameValidator(){
         // if (!(this.name)) {

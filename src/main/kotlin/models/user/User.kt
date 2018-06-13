@@ -18,6 +18,14 @@ import java.sql.Timestamp
 @IsModel(jooqTable = Users::class)
 class User {
 
+    companion object {
+        fun pluckUserRolesFromUserToUserRoleLinkAndAssignToUserRoles(user: User) {
+            user.userRoles = user.userToUserRoleLinks?.mapTo(mutableListOf<UserRole>()) {
+                it.userRole!!
+            }
+        }
+    }
+
     val record: UserRecord by lazy { UserRecord(this) }
 
     @TableField(name = "ID")

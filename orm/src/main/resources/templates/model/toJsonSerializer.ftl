@@ -243,4 +243,8 @@ class ${modelClass}ToJsonSerializer(val model: ${modelClass}) {
         root.set(key, value)
     }
 
+    fun set(key: String, value: IArrayNode) {
+        root.set(key, value)
+    }
+
 }

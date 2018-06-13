@@ -1,6 +1,7 @@
 package models.user
 
 import models.account.AccountValidator
+import models.user.daos.UserDaos
 import orm.usergeneratedrepository.UserValidatorTrait
 
 /**
@@ -8,33 +9,35 @@ import orm.usergeneratedrepository.UserValidatorTrait
  */
 class UserValidator(model: User) : UserValidatorTrait(model, model.record.validationManager) {
 
-    fun createScenario(): Boolean {
+    fun registrationCreateScenario() {
         validateName()
         validateAccount()
-
-        return this.validationManager.isValid()
     }
 
+
     private fun validateAccount() {
-        accountTester().let {
-            test ->
-            test.shouldNotBeNull(model.account)
-            model.account?.let {
-                testGeneral {
-                    AccountValidator(it).createScenario()
-                }
+        val account = model.account
+        account ?: throw IllegalStateException("no account for user provided")
+
+        AccountValidator(account).also {
+            it.userRegistrationCreateScenario()
+            if (!it.validationManager.isValid()) {
+                validationManager.markAsHasNestedErrors()
             }
         }
     }
 
     private fun validateName() {
-        nameTester().let {
-            test->
-            if (test.shouldNotBeNull(model.name)) {
-                model.name?.let {
-                    test.shouldBeLongerThan(it, 3)
-                }
-            }
+        val name = model.name
+        if (name == null) {
+            validationManager.addNameError("should be provided")
+            return
+        }
+        if (name.length < 3) {
+            validationManager.addNameError("too short, should be at least 3 characters long")
+        }
+        if (UserDaos.show.existsWithSuchName(name)) {
+            validationManager.addNameError("such name exists")
         }
     }
 

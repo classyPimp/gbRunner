@@ -6,7 +6,7 @@ import sun.text.normalizer.UTF16.append
 
 
 
-class PasswrodHashingService {
+object PasswordHashingService {
 
     val alphanumericCharSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     val secureRandomInstance = SecureRandom()

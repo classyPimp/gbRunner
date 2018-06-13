@@ -1,6 +1,8 @@
 package routes
 
 import controllers.HomeController
+import controllers.session.SessionController
+import controllers.user.UserRegistrationController
 import router.RoutesDrawer
 import router.src.Router
 import servletUtils.SimpleFileServer
@@ -26,6 +28,27 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
             SimpleFileServer(
                     ""
             ).serveFile(it)
+        }
+
+        get("/*") {
+            HomeController(it).get()
+        }
+
+        namespace("/api") {
+            namespace("/session") {
+                post("") {
+                    SessionController(it).create()
+                }
+            }
+
+            namespace("/user") {
+                namespace("/registration") {
+                    post("") {
+                        UserRegistrationController(it).create()
+                    }
+                }
+            }
+
         }
     }
 

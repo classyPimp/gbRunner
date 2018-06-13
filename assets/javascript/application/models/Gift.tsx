@@ -23,18 +23,20 @@ export class Gift extends BaseModel {
 
     @Property
     wordId: number
+    
     @Property
     name: string
+    
     @Property
     description: string
+    
     @Property
     specificForCampaignId: number
 
-        @HasOne("Campaign")
-        specificForCampaign: Campaign
-        @HasOne("Campaign")
-        specificForCampaign: Campaign
-        @HasOne("Word")
-        word: Word
+    @HasOne("Campaign")
+    specificForCampaign: Campaign
+
+    @HasOne("Word")
+    word: Word
 
 }

@@ -7,6 +7,8 @@ import { Router, Route, BrowserRouter, Link, match, Switch } from 'react-router-
 import {XhrRequestMaker} from '../../modelLayer/utils/XhrRequestMaker'
 import { FlashMessageQueue } from './shared/FlashMessageQueue';
 import { ModelRegistry } from '../../modelLayer/ModelRegistry'
+import { MainWithSidebarComponent } from './MainWithSidebarComponent'
+import { UserComponents } from './user/UserComponents'
 
 export class ApplicationComponent extends BaseReactComponent {
 
@@ -32,12 +34,8 @@ export class ApplicationComponent extends BaseReactComponent {
 
     componentWillMount() {
       if (!this.userIsLoggedIn() && this.props.match.url !== "/404") {
-        this.props.history.push("/users/sessions/new")
-      } else {
-        if (window.location.pathname === "/") {
-          this.props.history.push("/dashboards")
-        }
-      }
+        this.props.history.push("/user/session/new")
+      } 
     }
 
     @autobind
@@ -45,12 +43,13 @@ export class ApplicationComponent extends BaseReactComponent {
       return CurrentUser.instance.loggedIn
     }
 
-
     render() {
         return <div>
             <FlashMessageQueue ref={(it)=>{this.flashMessageQueue = it}}/>
             <Switch>
                 <Route path="/404" component={NotFound}/>
+                <Route path="/user/session/new" component={UserComponents.session.New}/>
+                <Route component={MainWithSidebarComponent}/>
             </Switch>
         </div>
     }

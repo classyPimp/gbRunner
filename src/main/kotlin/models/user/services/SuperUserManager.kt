@@ -10,6 +10,7 @@ import org.jooq.generated.Tables.USER_ROLES
 import orm.usergeneratedrepository.UserRecord
 import orm.userrolegeneratedrepository.UserRoleRecord
 import orm.utils.TransactionRunner
+import utils.security.PasswordHashingService
 
 
 /**
@@ -38,7 +39,7 @@ object SuperUserManager {
                 }
         )
         it.account = Account().also {
-            it.password = "sudo"
+            it.password = PasswordHashingService.hashPassword("sudo")
         }
     }
 
@@ -72,15 +73,15 @@ object SuperUserManager {
             return
         }
 
-        if (superUser.userRoles == null) {
+        if (superUser.userToUserRoleLinks == null) {
             throw IllegalStateException("User with SUPER_USER UserRole is not persistent or link is not assigned")
         }
 
-        if (superUser.userRoles!!.firstOrNull() == null) {
+        if (superUser.userToUserRoleLinks!!.firstOrNull() == null) {
             throw IllegalStateException("User with SUPER_USER UserRole is not persistent or link is not assigned")
         }
 
-        if (superUser.userRoles!!.first().name != PredefinedUserRoleManager.PredefinedRoleNames.SUPER_USER.toString()) {
+        if (superUser.userToUserRoleLinks!!.first().userRole!!.name != PredefinedUserRoleManager.PredefinedRoleNames.SUPER_USER.toString()) {
             throw IllegalStateException("User with SUPER_USER UserRole is not persistent or link is not assigned")
         }
 

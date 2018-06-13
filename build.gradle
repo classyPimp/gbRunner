@@ -21,6 +21,7 @@ apply plugin: "idea"
 
 kapt {
     correctErrorTypes = true
+    generateStubs = false
 }
 
 sourceCompatibility = 1.8
