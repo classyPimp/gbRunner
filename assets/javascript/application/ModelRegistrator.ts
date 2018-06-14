@@ -17,6 +17,8 @@ import { Item } from './models/Item'
 import { ItemBlueprint } from './models/ItemBlueprint'
 import { UploadedImage } from './models/UploadedImage'
 import { Word } from './models/Word'
+import { UserRole } from './models/UserRole'
+import { UserToUserRoleLink } from './models/UserToUserRoleLink'
 
 
 export class ModelRegistrator {
@@ -38,7 +40,9 @@ export class ModelRegistrator {
       Item,
       ItemBlueprint,
       UploadedImage,
-      Word              
+      Word,
+      UserRole,
+      UserToUserRoleLink,              
     }
   }
 

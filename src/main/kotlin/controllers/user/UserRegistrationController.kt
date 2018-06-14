@@ -2,6 +2,7 @@ package controllers.user
 
 import composers.user.UserRegistrationComposer
 import controllers.ApplicationControllerBase
+import models.user.User
 import models.user.tojsonserializers.UserRegistrationCreateToJsonSerializer
 import orm.usergeneratedrepository.UserToJsonSerializer
 import router.src.ServletRequestContext
@@ -18,6 +19,7 @@ class UserRegistrationController(context: ServletRequestContext) : ApplicationCo
         }
         composer.onSuccess = {
             currentUser.logIn(it)
+            User.pluckUserRolesFromUserToUserRoleLinkAndAssignToUserRoles(it)
             renderJson(
                     UserRegistrationCreateToJsonSerializer.onSuccess(it)
             )

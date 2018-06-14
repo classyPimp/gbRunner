@@ -24,4 +24,9 @@ class SessionController(context: ServletRequestContext) : ApplicationControllerB
         composer.run()
     }
 
+    fun delete() {
+        currentUser.logOut()
+        head(200)
+    }
+
 }

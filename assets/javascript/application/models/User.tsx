@@ -45,7 +45,7 @@ export class User extends BaseModel {
         this.afterCreateRequest(options)
     }    
 
-    @Route("DELETE", {url: "/api/sessions"})
+    @Route("DELETE", {url: "/api/session"})
     logout: (options?: RequestOptions) => Promise<any>
 
     afterLogoutReuqest(options: RequestOptions) {

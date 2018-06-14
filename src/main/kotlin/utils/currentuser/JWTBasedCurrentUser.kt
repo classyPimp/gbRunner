@@ -81,7 +81,7 @@ class JWTBasedCurrentUser(val session: JwtSessionHandler): ICurrentUser {
         if (userRoles != null) {
             val arrayNode = App.component.jacksonObjectMapper().createArrayNode()
             for (userRole in userRoles) {
-                if (userRole.isSpecific != null ) {
+                if (userRole.isSpecific != null && userRole.isSpecific != false ) {
                     continue
                 }
                 val objectNode = App.component.jacksonObjectMapper().createObjectNode()

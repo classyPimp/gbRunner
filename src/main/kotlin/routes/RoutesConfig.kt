@@ -3,6 +3,7 @@ package routes
 import controllers.HomeController
 import controllers.session.SessionController
 import controllers.user.UserRegistrationController
+import controllers.user.management.UserManagementController
 import router.RoutesDrawer
 import router.src.Router
 import servletUtils.SimpleFileServer
@@ -39,9 +40,17 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                 post("") {
                     SessionController(it).create()
                 }
+                delete("") {
+                    SessionController(it).delete()
+                }
             }
 
             namespace("/user") {
+                namespace("/management") {
+                    get("") {
+                        UserManagementController(it).index()
+                    }
+                }
                 namespace("/registration") {
                     post("") {
                         UserRegistrationController(it).create()

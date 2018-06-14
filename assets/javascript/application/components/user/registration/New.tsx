@@ -15,10 +15,26 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
 
     render(){
         return <div>
-            <PlainInputElement model={this.state.user} propertyName="name" registerInput={this.registerInput}/>
-            <PlainInputElement model={this.state.user.account} propertyName="email" registerInput={this.registerInput}/>
-            <PlainInputElement model={this.state.user.account} propertyName="password" registerInput={this.registerInput}/>
-            <PlainInputElement model={this.state.user.account} propertyName="passwordConfirmation" registerInput={this.registerInput}/>
+            <PlainInputElement model={this.state.user} propertyName="name" registerInput={this.registerInput}
+              optional={{
+                placeholder: "name"
+              }}
+            />
+            <PlainInputElement model={this.state.user.account} propertyName="email" registerInput={this.registerInput}
+              optional={{
+                placeholder: "email"
+              }}
+            />
+            <PlainInputElement model={this.state.user.account} propertyName="password" registerInput={this.registerInput}
+              optional={{
+                placeholder: "password"
+              }}
+            />
+            <PlainInputElement model={this.state.user.account} propertyName="passwordConfirmation" registerInput={this.registerInput}
+              optional={{
+                placeholder: "confirm password"
+              }}
+            />
             <button onClick={this.submit}>
                 submit
             </button>

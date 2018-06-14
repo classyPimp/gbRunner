@@ -28,7 +28,7 @@ export class ApplicationComponent extends BaseReactComponent {
     @autobind
     xhrOnFailHandler(xhr: XMLHttpRequest) {
         if (xhr.status === 404) {
-            this.props.history.replace("/404", {})
+            this.props.history.push("/404", {})
         }
     }
 
@@ -45,12 +45,12 @@ export class ApplicationComponent extends BaseReactComponent {
 
     render() {
         return <div>
-            <FlashMessageQueue ref={(it)=>{this.flashMessageQueue = it}}/>
-            <Switch>
-                <Route path="/404" component={NotFound}/>
-                <Route path="/user/session/new" component={UserComponents.session.New}/>
-                <Route component={MainWithSidebarComponent}/>
-            </Switch>
+          <FlashMessageQueue ref={(it)=>{this.flashMessageQueue = it}}/>
+          <Switch>
+              <Route path="/user/session/new" component={UserComponents.session.New}/>
+              <Route path="/404" component={NotFound}/>
+              <Route path="/*" component={MainWithSidebarComponent}/>
+          </Switch>
         </div>
     }
 

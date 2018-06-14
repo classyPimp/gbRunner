@@ -57,6 +57,11 @@ abstract class BaseController(
         context.response.sendError(errorCode)
     }
 
+    fun head(statusCode: Int) {
+        context.response.status = statusCode
+        context.response.writer.close()
+    }
+
     fun renderJson(body: String) {
         context.response.let {
             it.contentType = "application/json"

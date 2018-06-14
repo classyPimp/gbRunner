@@ -24,4 +24,17 @@ object UserIndexDao {
                 .execute()
     }
 
+    fun forManagementIndex(): MutableList<User> {
+        return UserRecord.GET()
+                .preload {
+                    it.userToUserRoleLinks() {
+                        it.preload {
+                            it.userRole()
+                        }
+                    }
+                    it.account()
+                }
+                .execute()
+    }
+
 }

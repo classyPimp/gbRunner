@@ -63,7 +63,7 @@ class SessionCreateComposer(val params: IParam) : ComposerBase() {
         val hashedPassword = userToLogin.account!!.password!!
 
         PasswordHashingService.checkPassword(passwordToTest, hashedPassword).let {
-            if (it)  {
+            if (!it)  {
                 intermediaryUserInstance.record.validationManager.addNameError("combination of credentials and password is not correct")
                 failImmediately(ModelInvalidError())
                 return

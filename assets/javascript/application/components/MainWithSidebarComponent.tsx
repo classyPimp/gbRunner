@@ -6,8 +6,14 @@ export class MainWithSidebarComponent extends BaseReactComponent {
 
     render(){
         return <div>
-          <SideBar/>
-          
+          <div className="pure-g">
+            <div className="pure-u-1-8">
+              <SideBar/>          
+            </div>
+            <div className="pure-u-7-8">
+
+            </div>
+          </div>
         </div>
     }
 

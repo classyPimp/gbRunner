@@ -51,6 +51,9 @@ export class CurrentUser extends MixinPubSubbableTrait(EmptyClass) {
             let encodedUserPart = cookies["jwt"].split('.')[1]
             let decodedUserPart = atob(encodedUserPart)
             let userParams = JSON.parse(decodedUserPart)
+            if (userParams['userRoles']) {
+              userParams['userRoles'] = JSON.parse(userParams['userRoles'])
+            }
             let user = new User(userParams)
             this.logIn(user)
         }

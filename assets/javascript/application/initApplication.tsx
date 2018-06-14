@@ -11,9 +11,10 @@ export function initApplication() {
 
     render(
         <BrowserRouter>
-            <Route path="/" component={ApplicationComponent}/>
+            <Route component={ApplicationComponent}/>
         </BrowserRouter>,
-        document.getElementById("app"))
+        document.getElementById("app")
+    )
 }
 
 
