@@ -4,7 +4,7 @@ import { HasOne } from '../../modelLayer/annotations/HasOne'
 import { HasMany } from '../../modelLayer/annotations/HasMany'
 import { ModelCollection } from '../../modelLayer/ModelCollection'
 import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute'
-
+import { Campaign } from "./Campaign"
 
 export class GenericGenericLink extends BaseModel {
 
@@ -21,20 +21,29 @@ export class GenericGenericLink extends BaseModel {
 
     @Property
     leftModelId: number
+
     @Property
     leftModelType: string
+
     @Property
     rightModelId: number
+
     @Property
     rightModelType: string
+
     @Property
     category: string
+
     @Property
     subCategory: string
+
     @Property
     currentStatus: string
+
     @Property
     description: string
 
+    @HasOne("Campaign")
+    campaign: Campaign
 
 }

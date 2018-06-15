@@ -1,6 +1,7 @@
 package routes
 
 import controllers.HomeController
+import controllers.campaign.forgamemaster.CampaignForGameMasterController
 import controllers.session.SessionController
 import controllers.user.UserRegistrationController
 import controllers.user.management.UserManagementController
@@ -54,6 +55,14 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                 namespace("/registration") {
                     post("") {
                         UserRegistrationController(it).create()
+                    }
+                }
+            }
+
+            namespace("/campaign") {
+                namespace("/for-game-master") {
+                    post("") {
+                        CampaignForGameMasterController(it).create()
                     }
                 }
             }

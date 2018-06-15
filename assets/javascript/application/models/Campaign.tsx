@@ -22,8 +22,11 @@ export class Campaign extends BaseModel {
 
     @Property
     name: string
+
     @Property
     description: string
 
-
+    @HasMany("GenericGenericLink")
+    linksToUsers: ModelCollection<GenericGenericLink>
+    
 }

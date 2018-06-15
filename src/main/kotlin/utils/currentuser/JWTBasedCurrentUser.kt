@@ -122,5 +122,7 @@ class JWTBasedCurrentUser(val session: JwtSessionHandler): ICurrentUser {
         } ?: return false
     }
 
-
+    override fun checkPermission(): CurrentUserPermissionBuilder {
+        return CurrentUserPermissionBuilder(this)
+    }
 }

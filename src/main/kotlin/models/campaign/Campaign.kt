@@ -7,6 +7,8 @@ import java.sql.Timestamp
 import org.jooq.generated.tables.GenericGenericLinks
 import models.genericgenericlink.GenericGenericLink
 import models.uploadedimage.UploadedImage
+import models.userrole.UserRole
+import javax.xml.registry.infomodel.User
 
 @IsModel(jooqTable = Campaigns::class)
 class Campaign {

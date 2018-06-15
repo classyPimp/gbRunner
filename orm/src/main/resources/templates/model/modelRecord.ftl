@@ -192,6 +192,7 @@ class ${modelClass}Record(val model: ${modelClass}) {
         <#elseif ab.associationType == "HAS_MANY_AS_POLYMORPHIC">
         model.${ab.propertyName}?.forEach {
             it.record.${ab.fieldOnThat.property} = model.${ab.fieldOnThis.property}
+            it.record.${ab.polymorphicTypeField.property} = "${modelClass}"
             it.record.saveCascade(dslContext)
         }
         <#elseif ab.associationType == "BELONGS_TO">

@@ -10,6 +10,8 @@ interface ICurrentUser {
 
     abstract val userRolesListInSession: MutableList<UserRole>?
 
+    abstract fun checkPermission(): CurrentUserPermissionBuilder
+
     abstract fun isLoggedIn(): Boolean
 
     abstract fun hasRole(roleName: String): Boolean
@@ -33,5 +35,6 @@ interface ICurrentUser {
     abstract fun storeRolesInSession(roles: MutableList<UserRole>)
 
     abstract fun storeRoleInSession(role: UserRole)
+
 
 }

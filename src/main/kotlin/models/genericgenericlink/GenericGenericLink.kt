@@ -11,6 +11,14 @@ import java.sql.Timestamp
 @IsModel(jooqTable = GenericGenericLinks::class)
 class GenericGenericLink {
 
+    enum class Categories {
+        ;
+        enum class UserToCampaignLink {
+            GAME_MASTER,
+            PLAYER
+        }
+    }
+
     val record: GenericGenericLinkRecord by lazy { GenericGenericLinkRecord(this) }
 
     @TableField(name = "ID")

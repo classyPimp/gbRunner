@@ -74,4 +74,12 @@ export class User extends BaseModel {
         //     this.addErrorFor("name", "no name given")
         // }
     }
+
+    @Route("GET", {url: "/api/user/management"})
+    static userManagementIndex: (options?: RequestOptions) => Promise<any>
+
+    static afterUserManagementIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
+
 }
