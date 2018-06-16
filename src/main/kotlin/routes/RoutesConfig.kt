@@ -61,6 +61,9 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
 
             namespace("/campaign") {
                 namespace("/for-game-master") {
+                    get("") {
+                        CampaignForGameMasterController(it).index()
+                    }
                     post("") {
                         CampaignForGameMasterController(it).create()
                     }

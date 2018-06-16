@@ -33,12 +33,12 @@ export class LoginStatus extends BaseReactComponent implements LoginStatusListen
             :
             <div>
                 <div>
-                    <Link to="/users/registration/new">
+                    <Link to="/user/registration/new">
                         register
                     </Link>
                 </div>
                 <div>
-                    <Link to="/users/session/new">
+                    <Link to="/user/session/new">
                         login
                     </Link>
                 </div>

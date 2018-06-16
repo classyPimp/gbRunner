@@ -59,6 +59,22 @@ export class CurrentUser extends MixinPubSubbableTrait(EmptyClass) {
         }
     }
 
+    hasRole(roleName: string): boolean {
+        if (!this.loggedInInstance) {
+            return false
+        }
+        if (!this.loggedInInstance.userRoles) {
+          return false
+        }
+        for (let userRole of this.loggedInInstance.userRoles.array) {
+            if (userRole.name === roleName) {
+                return true
+            }
+        }
+        return false
+    }
+    
+
 }
 
 

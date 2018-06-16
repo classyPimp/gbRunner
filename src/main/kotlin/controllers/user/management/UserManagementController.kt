@@ -11,15 +11,13 @@ import javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED
 class UserManagementController(context: ServletRequestContext) : ApplicationControllerBase(context) {
 
     fun index() {
-        if (!currentUser.isLoggedIn()) {
-            sendError(SC_UNAUTHORIZED)
-            return
-        }
-
-        if (!currentUser.hasRole(PredefinedUserRoleManager.PredefinedRoleNames.SUPER_USER.toString())) {
-            sendError(SC_UNAUTHORIZED)
-            return
-        }
+        currentUser.checkPermission()
+                .shouldBeLoggedIn()
+                .shouldHaveRole(PredefinedUserRoleManager.PredefinedRoleNames.SUPER_USER.toString())
+                .ifNot {
+                    sendError(SC_UNAUTHORIZED)
+                    return
+                }
 
         val users = UserDaos.index.forManagementIndex()
         renderJson(

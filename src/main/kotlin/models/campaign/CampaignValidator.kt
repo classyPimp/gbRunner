@@ -14,7 +14,7 @@ class CampaignValidator(model: Campaign) : CampaignValidatorTrait(model, model.r
 
     private fun validateName() {
         val name = model.name
-        if (name == null) {
+        if (name == null || name.isBlank()) {
             validationManager.addNameError("should be provided")
             return
         }
@@ -22,7 +22,7 @@ class CampaignValidator(model: Campaign) : CampaignValidatorTrait(model, model.r
 
     private fun validateDescription() {
         val description = model.description
-        if (description == null) {
+        if (description == null || description.isBlank()) {
             validationManager.addDescriptionError("should be provided")
             return
         }

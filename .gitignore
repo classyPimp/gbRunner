@@ -15,3 +15,4 @@ microFramework/build
 microFramework/out
 src/main/java/org/jooq
 uploads
+migrations/db/schema.rb

@@ -54,7 +54,6 @@ class JWTBasedCurrentUser(val session: JwtSessionHandler): ICurrentUser {
                         it.name = node["name"]?.asText()
                     }
                 }
-                null
             }
         }
 
@@ -112,6 +111,7 @@ class JWTBasedCurrentUser(val session: JwtSessionHandler): ICurrentUser {
     }
 
     override fun hasRole(roleName: String): Boolean {
+        println(userRolesListInSession)
         userRolesListInSession?.let {
             for (userRole in it) {
                 if (userRole.name == roleName) {

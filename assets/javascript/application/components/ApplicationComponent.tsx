@@ -48,6 +48,7 @@ export class ApplicationComponent extends BaseReactComponent {
           <FlashMessageQueue ref={(it)=>{this.flashMessageQueue = it}}/>
           <Switch>
               <Route path="/user/session/new" component={UserComponents.session.New}/>
+              <Route path="/user/registration/new" component={UserComponents.registration.New}/>
               <Route path="/404" component={NotFound}/>
               <Route path="/*" component={MainWithSidebarComponent}/>
           </Switch>

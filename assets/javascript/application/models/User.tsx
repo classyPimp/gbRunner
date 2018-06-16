@@ -76,9 +76,9 @@ export class User extends BaseModel {
     }
 
     @Route("GET", {url: "/api/user/management"})
-    static userManagementIndex: (options?: RequestOptions) => Promise<any>
+    static managementIndex: (options?: RequestOptions) => Promise<any>
 
-    static afterUserManagementIndexRequest(options: RequestOptions) {
+    static afterManagementIndexRequest(options: RequestOptions) {
       this.afterIndexRequest(options)
     }
 

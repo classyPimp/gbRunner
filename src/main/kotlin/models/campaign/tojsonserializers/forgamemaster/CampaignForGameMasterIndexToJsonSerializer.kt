@@ -1,4 +1,4 @@
-package models.campaign.tojsonserializers
+package models.campaign.tojsonserializers.forgamemaster
 
 import models.campaign.Campaign
 import orm.campaigngeneratedrepository.CampaignToJsonSerializer
