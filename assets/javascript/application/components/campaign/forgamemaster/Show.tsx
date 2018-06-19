@@ -5,6 +5,7 @@ import { match } from 'react-router-dom'
 import { Modal } from '../../shared/Modal'
 import autobind from 'autobind-decorator'
 import { CampaignComponents } from '../CampaignComponents'
+import { ModelCollection } from '../../../../modelLayer/ModelCollection';
 
 export class Show extends BaseReactComponent {
 
@@ -14,8 +15,10 @@ export class Show extends BaseReactComponent {
 
     state: {
       campaign: Campaign
+      playerUsers: ModelCollection<User>
     } = {
-      campaign: null
+      campaign: null,
+      playerUsers: null
     }
 
     modal: Modal
@@ -23,6 +26,8 @@ export class Show extends BaseReactComponent {
     
     componentDidMount() {
       Campaign.forGameMasterShow({wilds: {"campaignId": this.props.match.params.campaignId}}).then((campaign)=>{
+         let playerUsers = campaign.extractPlayerUsers()
+         let gameMasters = campaign.extractGameMasters()
          this.setState({campaign})
       })
     }
@@ -46,6 +51,9 @@ export class Show extends BaseReactComponent {
           <button onClick={this.initEdit}>
             edit
           </button>
+          <div>
+
+          </div>
         </div>
     }
 

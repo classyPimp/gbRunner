@@ -73,4 +73,6 @@ export class Campaign extends BaseModel {
       this.afterUpdateRequest(options)
     }
 
+    
+
 }

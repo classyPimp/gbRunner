@@ -18,4 +18,8 @@ class JacksonArrayNodeAdapter(val arrayNode: ArrayNode): IArrayNode {
         return arrayNode.toString()
     }
 
+    override fun serializeToString(): String {
+        return arrayNode.toString()
+    }
+
 }

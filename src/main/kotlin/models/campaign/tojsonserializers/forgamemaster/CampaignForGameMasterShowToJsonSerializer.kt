@@ -7,16 +7,15 @@ object CampaignForGameMasterShowToJsonSerializer {
 
     fun onSuccess(campaign: Campaign): String {
         CampaignToJsonSerializer(campaign).let {
-
-            return it.serializeToString()
-        }
-    }
-
-    fun onError(campaign: Campaign): String {
-        CampaignToJsonSerializer(campaign). let {
-
-
-            it.includeErrors()
+            it.includeLinksToUsers() {
+                it.includeUser() {
+                    it.includeAccount() {
+                        it.only {
+                            arrayOf(it.email)
+                        }
+                    }
+                }
+            }
             return it.serializeToString()
         }
     }

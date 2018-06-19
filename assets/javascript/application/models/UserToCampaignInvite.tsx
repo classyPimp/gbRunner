@@ -6,6 +6,7 @@ import { ModelCollection } from '../../modelLayer/ModelCollection'
 import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute'
 
 import { User } from './User'
+import { Campaign } from './Campaign';
 
 export class UserToCampaignInvite extends BaseModel {
 
@@ -22,20 +23,29 @@ export class UserToCampaignInvite extends BaseModel {
 
     @Property
     campaignId: number
+    
     @Property
     userThatIsInvitedId: number
+    
     @Property
     userThatInvitesId: number
+    
     @Property
     invitationToken: string
+    
     @Property
     isAccepted: string
+    
     @Property
     isRejected: string
 
-        @HasOne("User")
-        userToInvite: User
-        @HasOne("User")
-        userThatInvites: User
+    @HasOne("User")
+    userToInvite: User
+    
+    @HasOne("User")
+    userThatInvites: User
+
+    @HasOne("Campaign")
+    campaign: Campaign
 
 }

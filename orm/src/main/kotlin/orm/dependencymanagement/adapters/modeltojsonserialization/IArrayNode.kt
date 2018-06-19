@@ -8,4 +8,6 @@ interface IArrayNode {
 
     override abstract fun toString(): String
 
+    abstract fun serializeToString(): String
+
 }

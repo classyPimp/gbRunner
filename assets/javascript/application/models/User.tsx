@@ -7,7 +7,7 @@ import { Property } from '../../modelLayer/annotations/Property';
 import { BaseModel } from '../../modelLayer/BaseModel';
 import {Account} from './Account'
 import  { ModelRegistry } from '../../modelLayer/ModelRegistry' 
-import { ModelCollection } from '../../modelLayer/ModelCollection'
+import { ModelCollection } from '../../modelLayer/ModelCollection';
 import { UserRole } from './UserRole'
 
 export class User extends BaseModel {
@@ -79,6 +79,16 @@ export class User extends BaseModel {
     static managementIndex: (options?: RequestOptions) => Promise<any>
 
     static afterManagementIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
+
+    @Route("GET", {url: "/api/user"})
+    static index: (options?: RequestOptions) => Promise<ModelCollection<User>>
+
+    @Route("GET", {url: "/api/user/as-player-of-campaign/:campaignId"})
+    static asPlayerOfCampaignIndex: (options?: RequestOptions) => Promise<ModelCollection<User>>
+
+    static afterAsPlayerOfCampaignIndexRequest(options: RequestOptions) {
       this.afterIndexRequest(options)
     }
 

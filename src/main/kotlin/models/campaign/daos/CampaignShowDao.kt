@@ -13,6 +13,17 @@ object CampaignShowDao {
                 .join {
                     it.linksToUsers()
                 }
+                .preload {
+                    it.linksToUsers() {
+                        it.preload {
+                            it.user {
+                                it.preload {
+                                    it.account()
+                                }
+                            }
+                        }
+                    }
+                }
                 .where(
                         table.ID.eq(campaignId).and(
                                 GENERIC_GENERIC_LINKS.RIGHT_MODEL_ID.eq(gameMasterId)

@@ -5,6 +5,7 @@ import { New as RegistrationNew } from './registration/New'
 import { LoginStatus } from './LoginStatus'
 import { Index as ManagementIndex } from './management/Index';
 import { Main as ManagementMain } from './management/Main'
+import { Index } from './Index'
 
 export let UserComponents = {
   session: {
@@ -18,4 +19,6 @@ export let UserComponents = {
     Main: ManagementMain,
     Index: ManagementIndex
   },
+  Index,
+  
 }

@@ -19,6 +19,8 @@ import { UploadedImage } from './models/UploadedImage'
 import { Word } from './models/Word'
 import { UserRole } from './models/UserRole'
 import { UserToUserRoleLink } from './models/UserToUserRoleLink'
+import { UserToCampaignInvite } from './models/UserToCampaignInvite';
+
 
 
 export class ModelRegistrator {
@@ -43,6 +45,7 @@ export class ModelRegistrator {
       Word,
       UserRole,
       UserToUserRoleLink,              
+      UserToCampaignInvite,
     }
   }
 

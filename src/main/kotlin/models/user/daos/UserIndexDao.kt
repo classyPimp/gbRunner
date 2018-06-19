@@ -1,8 +1,11 @@
 package models.user.daos
 
+import models.campaign.Campaign
 import org.jooq.generated.tables.Users
 import orm.usergeneratedrepository.UserRecord
 import models.user.User
+import org.apache.commons.lang3.mutable.Mutable
+import org.jooq.generated.Tables.GENERIC_GENERIC_LINKS
 import org.jooq.generated.Tables.USERS
 import org.jooq.impl.DSL
 
@@ -34,6 +37,25 @@ object UserIndexDao {
                     }
                     it.account()
                 }
+                .execute()
+    }
+
+    fun forIndex(): MutableList<User> {
+        return UserRecord.GET()
+                .execute()
+    }
+
+    fun asPlayerOfCampaign(campaignId: Long): MutableList<User> {
+        return UserRecord.GET()
+                .join {
+                    it.linksToCampaigns()
+                }
+                .where(
+                        GENERIC_GENERIC_LINKS.LEFT_MODEL_ID.eq(campaignId)
+                                .and(
+                                        GENERIC_GENERIC_LINKS.LEFT_MODEL_TYPE.eq(Campaign::class.simpleName)
+                                )
+                )
                 .execute()
     }
 
