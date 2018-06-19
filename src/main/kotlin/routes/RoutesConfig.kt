@@ -5,6 +5,7 @@ import controllers.campaign.forgamemaster.CampaignForGameMasterController
 import controllers.session.SessionController
 import controllers.user.UserRegistrationController
 import controllers.user.management.UserManagementController
+import controllers.usertocampaigninvite.UserToCampaignInviteController
 import router.RoutesDrawer
 import router.src.Router
 import servletUtils.SimpleFileServer
@@ -67,6 +68,21 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                     post("") {
                         CampaignForGameMasterController(it).create()
                     }
+                    get("/:campaignId") {
+                        CampaignForGameMasterController(it).show()
+                    }
+                    get("/:campaignId/edit") {
+                        CampaignForGameMasterController(it).edit()
+                    }
+                    put("/:campaignId") {
+                        CampaignForGameMasterController(it).update()
+                    }
+                }
+            }
+
+            namespace("/user-to-campaign-invite") {
+                post("/:campaignId/create-invite") {
+                    UserToCampaignInviteController(it).create()
                 }
             }
 

@@ -40,6 +40,14 @@ class CurrentUserPermissionBuilder(private val currentUser: ICurrentUser) {
         return this
     }
 
+    inline fun should(block: ()->Boolean): CurrentUserPermissionBuilder {
+        if (!block.invoke()) {
+           isAuthorized = false
+        }
+        return this
+    }
+
+
     inline fun ifNot(block: ()->Unit) {
         if (isAuthorized == false) {
             block.invoke()

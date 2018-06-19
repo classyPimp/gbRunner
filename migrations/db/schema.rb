@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608063047) do
+ActiveRecord::Schema.define(version: 20180619093346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20180608063047) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "avatars", force: :cascade do |t|
+    t.string "file_name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_avatars_on_user_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -221,6 +229,20 @@ ActiveRecord::Schema.define(version: 20180608063047) do
     t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
+  create_table "user_to_campaign_invites", force: :cascade do |t|
+    t.bigint "campaign_id"
+    t.bigint "user_that_is_invited_id"
+    t.bigint "user_that_invites_id"
+    t.string "invitation_token"
+    t.datetime "is_accepted"
+    t.datetime "is_rejected"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_user_to_campaign_invites_on_campaign_id"
+    t.index ["user_that_invites_id"], name: "index_user_to_campaign_invites_on_user_that_invites_id"
+    t.index ["user_that_is_invited_id"], name: "index_user_to_campaign_invites_on_user_that_is_invited_id"
+  end
+
   create_table "user_to_user_role_links", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "user_role_id"
@@ -246,6 +268,7 @@ ActiveRecord::Schema.define(version: 20180608063047) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "avatars", "users"
   add_foreign_key "dominion_expenditures", "game_characters"
   add_foreign_key "effort_expenditures", "game_characters"
   add_foreign_key "game_characters", "campaigns"
@@ -256,6 +279,7 @@ ActiveRecord::Schema.define(version: 20180608063047) do
   add_foreign_key "influence_expenditures", "game_characters"
   add_foreign_key "items", "campaigns"
   add_foreign_key "items", "item_blueprints"
+  add_foreign_key "user_to_campaign_invites", "campaigns"
   add_foreign_key "user_to_user_role_links", "user_roles"
   add_foreign_key "user_to_user_role_links", "users"
 end

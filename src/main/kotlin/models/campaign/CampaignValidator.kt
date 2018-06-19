@@ -38,4 +38,13 @@ class CampaignValidator(model: Campaign) : CampaignValidatorTrait(model, model.r
         }
     }
 
+    fun forGameMasterUpdateScenario() {
+        if (model.record.propertiesChangeTracker.nameIsChanged) {
+            validateName()
+        }
+        if (model.record.propertiesChangeTracker.descriptionIsChanged) {
+            validateDescription()
+        }
+    }
+
 }

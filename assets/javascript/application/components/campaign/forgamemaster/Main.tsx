@@ -30,6 +30,7 @@ export class Main extends BaseReactComponent {
             <Switch>
                 <Route path={`${this.props.match.url}/index`} component={CampaignComponents.forGameMaster.Index}/>
                 <Route path={`${this.props.match.url}/new`} component={CampaignComponents.forGameMaster.New}/>
+                <Route path={`${this.props.match.url}/:campaignId`} component={CampaignComponents.forGameMaster.Show}/>
             </Switch>
         </div>
     }

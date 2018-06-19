@@ -47,4 +47,30 @@ export class Campaign extends BaseModel {
     static afterForGameMasterIndexRequest(options: RequestOptions) {
         this.afterIndexRequest(options)
     }
+
+    @Route("GET", {url: "/api/campaign/for-game-master/:campaignId"})
+    static forGameMasterShow: (options?: RequestOptions) => Promise<Campaign>
+    
+    static afterGameMasterShowRequest(options: RequestOptions) {
+      this.afterShowRequest(options)
+    }
+
+    @Route("GET", {url: "/api/campaign/for-game-master/:id/edit"})
+    static forGameMasterEdit: (options?: RequestOptions) => Promise<Campaign>
+
+    static afterForGameMasterEditRequest(options: RequestOptions) {
+      this.afterEditRequest(options)
+    }
+
+    @Route("PUT", {url: "/api/campaign/for-game-master/:id", defaultWilds: ["id"]})
+    forGameMasterUpdate: (options?: RequestOptions) => Promise<Campaign>
+
+    beforeForGameMasterUpdateRequest(options: RequestOptions) {
+      this.beforeUpdateRequest(options)
+    }
+
+    afterForGameMasterUpdateRequest(options: RequestOptions) {
+      this.afterUpdateRequest(options)
+    }
+
 }

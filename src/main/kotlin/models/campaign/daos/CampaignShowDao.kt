@@ -23,5 +23,15 @@ object CampaignShowDao {
                 .firstOrNull()
     }
 
+    fun existsWithId(campaignId: Long): Boolean {
+        val campaign = CampaignRecord.GET()
+                .where(table.ID.eq(campaignId))
+                .limit(1)
+                .execute()
+                .firstOrNull()
+
+        return (campaign != null)
+    }
+
 
 }
