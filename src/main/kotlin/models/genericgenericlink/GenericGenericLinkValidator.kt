@@ -36,5 +36,11 @@ class GenericGenericLinkValidator(model: GenericGenericLink) : GenericGenericLin
         }
     }
 
+    fun userToGameCharacterAsPlayerPrimaryCharacterCreateScenario() {
+        validateUserType()
+        validateUserId()
+        validateCategory(GenericGenericLink.Categories.UserToCharacterLink.PRIMARY_PLAYER_CHARACTER.toString())
+    }
+
 
 }

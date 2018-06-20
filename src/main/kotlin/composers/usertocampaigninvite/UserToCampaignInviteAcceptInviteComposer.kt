@@ -1,6 +1,7 @@
 package composers.usertocampaigninvite
 
 import models.genericgenericlink.GenericGenericLink
+import models.genericgenericlink.daos.GenericGenericLinkDaos
 import models.genericgenericlink.factories.CampaignGenericGenericLinkToUserAsPlayerFactory
 import utils.composer.ComposerBase
 import models.usertocampaigninvite.UserToCampaignInvite
@@ -30,6 +31,7 @@ class UserToCampaignInviteAcceptInviteComposer(
         findAndSetUserToCampaignInvitePreloadingRequired()
         markInviteAsAccepted()
         createCampaignToUserLinkAsPlayer()
+        validate()
     }
 
     private fun findAndSetUserToCampaignInvitePreloadingRequired() {
@@ -53,6 +55,16 @@ class UserToCampaignInviteAcceptInviteComposer(
         }
     }
 
+    private fun validate() {
+        val userIsAlreadyPlayerOfThisCampaign = GenericGenericLinkDaos.show.userToCampaignLinkAsPlayerExistsFor(
+                campaignId = userToCampaignInvite.campaignId!!,
+                userId = userToCampaignInvite.userThatIsInvitedId!!
+        )
+        if (userIsAlreadyPlayerOfThisCampaign) {
+            userToCampaignInvite.record.validationManager.addGeneralError("already player")
+        }
+    }
+
     override fun compose(){
         TransactionRunner.run { tx ->
             userToCampaignInvite.record.save(tx.inTransactionDsl)
@@ -62,6 +74,9 @@ class UserToCampaignInviteAcceptInviteComposer(
 
     override fun fail(error: Throwable) {
         when(error) {
+            is ModelInvalidError -> {
+                onError(userToCampaignInvite)
+            }
             else -> {
                 throw error
             }

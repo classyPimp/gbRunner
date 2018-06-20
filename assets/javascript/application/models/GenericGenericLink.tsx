@@ -5,6 +5,8 @@ import { HasMany } from '../../modelLayer/annotations/HasMany'
 import { ModelCollection } from '../../modelLayer/ModelCollection'
 import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute'
 import { Campaign } from "./Campaign"
+import { User } from './User'
+import { GameCharacter } from './GameCharacter'
 
 export class GenericGenericLink extends BaseModel {
 
@@ -45,5 +47,11 @@ export class GenericGenericLink extends BaseModel {
 
     @HasOne("Campaign")
     campaign: Campaign
+
+    @HasOne("User")
+    user: User
+
+    @HasMany("GameCharacter")
+    gameCharacters: ModelCollection<GameCharacter>
 
 }

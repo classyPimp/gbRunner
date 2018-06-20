@@ -28,6 +28,11 @@ export class SideBar extends BaseReactComponent {
                         campaigns where I'm gm
                     </Link>
                 </li>
+                <li className="pure-menu-item">
+                    <Link to="/campaign/for-player" className="pure-menu-link">
+                        campaigns I play
+                    </Link>
+                </li>
             </ul>
         </div>
     }

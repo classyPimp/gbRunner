@@ -3,6 +3,7 @@ import * as React from 'react'
 import { User } from '../../models/User';
 import { ModelCollection } from '../../../modelLayer/ModelCollection';
 import { Model } from '../../../../hilfhund/js/models/Model';
+import autobind from 'autobind-decorator'
 
 export class Index extends BaseReactComponent {
 
@@ -31,13 +32,18 @@ export class Index extends BaseReactComponent {
                         {user.name}
                     </p>
                     {this.props.selectable &&
-                        <button>
+                        <button onClick={()=>{this.selectUser(user)}}>
                             select
                         </button>
                     }
                 </div>
             })}
         </div>
+    }
+
+    @autobind
+    selectUser(user: User) {
+      this.props.onSelect(user)
     }
 
 }

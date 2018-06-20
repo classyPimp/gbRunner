@@ -41,7 +41,6 @@ class User {
     @TableField(name = "UPDATED_AT")
     var updatedAt: Timestamp? = null
 
-
     @HasOne(model = Account::class, fieldOnThis = "ID", fieldOnThat = "USER_ID")
     var account: Account? = null
 
@@ -56,6 +55,8 @@ class User {
     @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "RIGHT_MODEL_ID", polymorphicTypeField = "RIGHT_MODEL_TYPE")
     var linksToCampaigns: MutableList<GenericGenericLink>? = null
 
+    @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "RIGHT_MODEL_ID", polymorphicTypeField = "RIGHT_MODEL_TYPE")
+    var linksToGameCharacters: MutableList<GenericGenericLink>? = null
 }
 
 

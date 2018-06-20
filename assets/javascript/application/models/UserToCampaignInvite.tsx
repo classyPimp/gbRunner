@@ -48,4 +48,21 @@ export class UserToCampaignInvite extends BaseModel {
     @HasOne("Campaign")
     campaign: Campaign
 
+    @Route("POST", {url: "/api/user-to-campaign-invite/:campaignId/create-invite"})
+    create: (options?: RequestOptions) => Promise<UserToCampaignInvite>
+
+    @Route("GET", {url: "/api/user-to-campaign-invite/:invitationToken"})
+    static show: (options?: RequestOptions) => Promise<UserToCampaignInvite>
+
+    @Route("GET", {url: "/api/user-to-campaign-invite/joinCampaign/:invitationToken", defaultWilds: ["invitationToken"]})
+    joinCampaign: (options?: RequestOptions) => Promise<UserToCampaignInvite>
+
+    beforeJoinCampaignRequest(options: RequestOptions) {
+      this.beforeCreateRequest(options)
+    }
+
+    afterJoinCampaignRequest(options: RequestOptions) {
+      this.afterCreateRequest(options)
+    }
+
 }

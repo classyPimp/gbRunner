@@ -32,6 +32,18 @@ export function MixinValidatableTrait<TBase extends AnyConstructor>(Base: TBase)
                 this.errors[propertyName] = errorsToAdd
             }
         }
+
+        containsSpecificError(propertyName: string, errorText: string) {
+          let errors = this.getErrorsFor(propertyName)
+          if (errors) {
+            for (let index = 0; index < errors.length; index++) {
+              if (errorText === errors[index]) {
+                return true
+                break
+              }
+            }
+          }
+        }
         
         validate(){
             this.errors = undefined

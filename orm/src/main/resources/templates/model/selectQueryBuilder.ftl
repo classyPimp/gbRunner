@@ -110,6 +110,11 @@ constructor(
         return models
     }
 
+    fun executeGetFirstOrNull(): ${modelClass}? {
+        return limit(1).execute().firstOrNull()
+    }
+
+
     <#list fieldBeans as fieldBean>
     fun where${fieldBean.capitalizedProperty}Eq(value: ${fieldBean.type}): ${modelClass}SelectQueryBuilder {
         where(tableOrAlias.${fieldBean.tableFieldName}.eq(value))

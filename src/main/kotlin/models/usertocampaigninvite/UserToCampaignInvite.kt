@@ -7,9 +7,26 @@ import orm.usertocampaigninvitegeneratedrepository.UserToCampaignInviteRecord
 import java.sql.Timestamp
 import org.jooq.generated.tables.Users
 import models.user.User
+import com.sun.deploy.util.Base64Wrapper.encodeToString
+import java.util.Base64.getUrlEncoder
+import org.apache.commons.lang3.RandomUtils.nextBytes
+import java.security.SecureRandom
+import java.util.*
+
 
 @IsModel(jooqTable = UserToCampaignInvites::class)
 class UserToCampaignInvite {
+
+    companion object {
+        fun generateInvitationToken(): String {
+            val random = SecureRandom()
+            val bytes = ByteArray(64)
+            random.nextBytes(bytes)
+            val encoder = Base64.getUrlEncoder().withoutPadding()
+            val token = encoder.encodeToString(bytes)
+            return token
+        }
+    }
 
     val record: UserToCampaignInviteRecord by lazy { UserToCampaignInviteRecord(this) }
 

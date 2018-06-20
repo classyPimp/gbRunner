@@ -1,7 +1,9 @@
 package models.usertocampaigninvite
 
 import models.campaign.daos.CampaignDaos
+import models.genericgenericlink.daos.GenericGenericLinkDaos
 import models.user.daos.UserDaos
+import models.usertocampaigninvite.daos.UserToCampaignInviteDaos
 import orm.usertocampaigninvitegeneratedrepository.UserToCampaignInviteValidatorTrait
 
 class UserToCampaignInviteValidator(model: UserToCampaignInvite) : UserToCampaignInviteValidatorTrait(model, model.record.validationManager) {
@@ -9,6 +11,7 @@ class UserToCampaignInviteValidator(model: UserToCampaignInvite) : UserToCampaig
     fun createScenario(){
         validateUserThatIsInvitedId()
         validateCampaignId()
+        validateIfUserAlreadyIsAPlayer()
     }
 
     private fun validateCampaignId() {
@@ -30,5 +33,14 @@ class UserToCampaignInviteValidator(model: UserToCampaignInvite) : UserToCampaig
             validationManager.addUserThatIsInvitedIdError("no such user")
         }
     }
+
+    private fun validateIfUserAlreadyIsAPlayer() {
+        val userId = model.userThatIsInvitedId ?: return
+        val campaignId = model.campaignId ?: return
+        if (GenericGenericLinkDaos.show.userToCampaignLinkAsPlayerExistsFor(userId = userId, campaignId = campaignId)) {
+            validationManager.addGeneralError("user is player already for this campaign")
+        }
+    }
+
 
 }

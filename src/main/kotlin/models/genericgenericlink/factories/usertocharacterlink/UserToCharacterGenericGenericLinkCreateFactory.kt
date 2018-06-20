@@ -1,0 +1,5 @@
+package models.genericgenericlink.factories.usertocharacterlink
+
+object UserToCharacterGenericGenericLinkCreateFactory {
+
+}

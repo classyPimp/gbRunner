@@ -15,6 +15,9 @@ class CurrentUserPermissionBuilder(private val currentUser: ICurrentUser) {
     }
 
     fun shouldHaveRole(roleName: String): CurrentUserPermissionBuilder {
+        if (!isAuthorized) {
+            return this
+        }
         if (!currentUser.isLoggedIn()) {
             isAuthorized = false
             return this
@@ -41,6 +44,9 @@ class CurrentUserPermissionBuilder(private val currentUser: ICurrentUser) {
     }
 
     inline fun should(block: ()->Boolean): CurrentUserPermissionBuilder {
+        if (!isAuthorized) {
+            return this
+        }
         if (!block.invoke()) {
            isAuthorized = false
         }

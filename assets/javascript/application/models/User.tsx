@@ -9,6 +9,7 @@ import {Account} from './Account'
 import  { ModelRegistry } from '../../modelLayer/ModelRegistry' 
 import { ModelCollection } from '../../modelLayer/ModelCollection';
 import { UserRole } from './UserRole'
+import { GenericGenericLink } from './GenericGenericLink'
 
 export class User extends BaseModel {
    
@@ -19,6 +20,15 @@ export class User extends BaseModel {
 
     @Property
     name: string
+
+    @HasOne("Account")
+    account: Account
+
+    @HasMany("UserRole")
+    userRoles: ModelCollection<UserRole>
+
+    @HasMany("GenericGenericLink")
+    linksToGameCharacters: ModelCollection<GenericGenericLink>
  
 
     @Route("POST", {url: "/api/user/registration"})
@@ -48,12 +58,8 @@ export class User extends BaseModel {
     @Route("DELETE", {url: "/api/session"})
     logout: (options?: RequestOptions) => Promise<any>
 
-    afterLogoutReuqest(options: RequestOptions) {
-        options.deferredPromise.then((resp) => {
-            let newUser = new User(resp)
-            newUser.validate()
-            return newUser
-        })
+    afterLogoutRequest(options: RequestOptions) {
+        this.afterCreateRequest(options)
     }
 
     @Route("GET", {url: "/api/users/forSearchForm"})
@@ -63,11 +69,6 @@ export class User extends BaseModel {
       this.afterIndexRequest(options)
     }
 
-    @HasOne("Account")
-    account: Account
-
-    @HasMany("UserRole")
-    userRoles: ModelCollection<UserRole>
 
     nameValidator(){
         // if (!(this.name)) {

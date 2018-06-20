@@ -109,4 +109,11 @@ export class GameCharacter extends BaseModel {
     @HasMany("GenericGenericLink")
     linksToUsers: ModelCollection<GenericGenericLink>
 
+
+    @Route("GET", {url: "/api/game-character/:campaignId"})
+    static forPlayerAsPrimaryCharacterShow: (options?: RequestOptions) => Promise<GameCharacter>
+
+    static afterForPlayerAsPrimaryCharacterShowRequest(options: RequestOptions) {
+      this.afterShowRequest(options)
+    }
 }

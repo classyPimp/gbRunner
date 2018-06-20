@@ -2,7 +2,9 @@ package routes
 
 import controllers.HomeController
 import controllers.campaign.forgamemaster.CampaignForGameMasterController
+import controllers.campaign.forplayer.CampaignForPlayerController
 import controllers.session.SessionController
+import controllers.user.UserController
 import controllers.user.UserRegistrationController
 import controllers.user.management.UserManagementController
 import controllers.usertocampaigninvite.UserToCampaignInviteController
@@ -48,6 +50,9 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
             }
 
             namespace("/user") {
+                get("") {
+                    UserController(it).index()
+                }
                 namespace("/management") {
                     get("") {
                         UserManagementController(it).index()
@@ -78,11 +83,25 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                         CampaignForGameMasterController(it).update()
                     }
                 }
+                namespace("/for-player") {
+                    get("") {
+                        CampaignForPlayerController(it).index()
+                    }
+                    get("/:campaignId") {
+                        CampaignForPlayerController(it).show()
+                    }
+                }
             }
 
             namespace("/user-to-campaign-invite") {
                 post("/:campaignId/create-invite") {
                     UserToCampaignInviteController(it).create()
+                }
+                get("/joinCampaign/:invitationToken") {
+                    UserToCampaignInviteController(it).acceptInvite()
+                }
+                get("/:invitationToken") {
+                    UserToCampaignInviteController(it).show()
                 }
             }
 

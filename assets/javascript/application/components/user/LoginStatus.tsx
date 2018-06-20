@@ -4,6 +4,7 @@ import { CurrentUser, LoginStatusListener } from '../../services/CurrentUser';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
 import { User } from '../../models/User';
+import { ApplicationComponent } from '../ApplicationComponent'
 
 
 export class LoginStatus extends BaseReactComponent implements LoginStatusListener {
@@ -51,7 +52,7 @@ export class LoginStatus extends BaseReactComponent implements LoginStatusListen
     logout(){
         this.state.currentUser.loggedInInstance.logout().then(()=>{
             this.state.currentUser.logOut(this.state.currentUser.loggedInInstance)
-            this.forceUpdate()
+            ApplicationComponent.instance.props.history.replace("/user/session/new")
         })      
     }
 

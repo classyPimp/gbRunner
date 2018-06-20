@@ -46,7 +46,7 @@ class RouteSearcher(uriString: String, root: PlainNode) {
             if (isLastPart() && nodeForPart.hasHandler) {
                 return nodeForPart.handler
             }
-            if (!bothAreLast(node)) {
+            if (notLastPart() && node.hasAnyTypeOfChildren) {
                 incrementPartIndex()
                 return findInPlain(nodeForPart)
             }

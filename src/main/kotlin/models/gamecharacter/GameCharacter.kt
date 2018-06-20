@@ -11,6 +11,10 @@ import org.jooq.generated.tables.GameCharacters
 @IsModel(jooqTable = GameCharacters::class)
 class GameCharacter {
 
+    enum class Categories {
+        PLAYER_PRIMARY_CHARACTER,
+    }
+
     val record: GameCharacterRecord by lazy { GameCharacterRecord(this) }
 
     @TableField(name = "ID")
@@ -107,7 +111,7 @@ class GameCharacter {
     @BelongsTo(model = CharacterBlueprint::class, fieldOnThis = "CHARACTER_BLUEPRINT_ID", fieldOnThat = "ID")
     var characterBlueprint: CharacterBlueprint? = null
 
-    @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "RIGHT_MODEL_ID", polymorphicTypeField = "RIGHT_MODEL_TYPE")
+    @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "LEFT_MODEL_ID", polymorphicTypeField = "LEFT_MODEL_TYPE")
     var linksToUsers: MutableList<GenericGenericLink>? = null
 
 }

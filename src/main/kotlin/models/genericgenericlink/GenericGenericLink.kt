@@ -2,6 +2,7 @@ package models.genericgenericlink
 
 import models.campaign.Campaign
 import models.characterblueprint.CharacterBlueprint
+import models.gamecharacter.GameCharacter
 import models.user.User
 import org.jooq.generated.tables.GenericGenericLinks
 import orm.annotations.*
@@ -17,7 +18,11 @@ class GenericGenericLink {
             GAME_MASTER,
             PLAYER
         }
+        enum class UserToCharacterLink {
+            PRIMARY_PLAYER_CHARACTER
+        }
     }
+
 
     val record: GenericGenericLinkRecord by lazy { GenericGenericLinkRecord(this) }
 
@@ -55,11 +60,14 @@ class GenericGenericLink {
     @TableField(name = "DESCRIPTION")
     var description: String? = null
 
-    @BelongsTo(model = User::class, fieldOnThat = "ID", fieldOnThis = "RIGHT_MODEL_ID")
+    @BelongsTo(model = User::class, fieldOnThat = "ID", fieldOnThis = "LEFT_MODEL_ID")
     var user: User? = null
 
     @BelongsTo(model = Campaign::class, fieldOnThis = "LEFT_MODEL_ID", fieldOnThat = "ID")
     var campaign: Campaign? = null
+
+    @BelongsTo(model = GameCharacter::class, fieldOnThat = "ID", fieldOnThis = "LEFT_MODEL_ID")
+    var gameCharacter: GameCharacter? = null
 
     @BelongsTo(model = CharacterBlueprint::class, fieldOnThat = "ID", fieldOnThis = "RIGHT_MODEL_ID")
     var characterBlueprint: CharacterBlueprint? = null

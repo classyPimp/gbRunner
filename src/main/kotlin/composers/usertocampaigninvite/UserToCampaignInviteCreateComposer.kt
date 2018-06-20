@@ -4,6 +4,7 @@ import utils.composer.ComposerBase
 import models.usertocampaigninvite.UserToCampaignInvite
 import models.usertocampaigninvite.UserToCampaignInviteRequestParametersWrapper
 import models.usertocampaigninvite.UserToCampaignInviteValidator
+import models.usertocampaigninvite.daos.UserToCampaignInviteDaos
 import models.usertocampaigninvite.factories.UserToCampaignInviteCreateFactory
 import orm.services.ModelInvalidError
 import utils.composer.composerexceptions.InvalidRequestParametersError
@@ -37,6 +38,13 @@ class UserToCampaignInviteCreateComposer(
         userToCampaignInviteToCreate = UserToCampaignInviteCreateFactory.create(
                 params = wrappedParams, campaignId = campaignId, userThatInvitesId = userThatInvitesId
         )
+        val previousActiveInviteForUser = UserToCampaignInviteDaos.show.activeForUser(
+                userThatIsInvitedId = userToCampaignInviteToCreate.userThatIsInvitedId!!,
+                campaignId = campaignId
+        )
+        if (previousActiveInviteForUser != null) {
+            userToCampaignInviteToCreate = previousActiveInviteForUser
+        }
     }
 
     private fun validate() {
@@ -49,7 +57,9 @@ class UserToCampaignInviteCreateComposer(
     }
 
     override fun compose(){
-        userToCampaignInviteToCreate.record.save()
+        if (!userToCampaignInviteToCreate.record.isPersited()) {
+            userToCampaignInviteToCreate.record.save()
+        }
     }
 
     override fun fail(error: Throwable) {

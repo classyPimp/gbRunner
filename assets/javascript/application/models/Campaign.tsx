@@ -7,6 +7,7 @@ import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute';
 
 import { GenericGenericLink } from './GenericGenericLink'
 import { Index } from '../components/user/management/Index';
+import { User } from './User'
 
 export class Campaign extends BaseModel {
 
@@ -51,7 +52,7 @@ export class Campaign extends BaseModel {
     @Route("GET", {url: "/api/campaign/for-game-master/:campaignId"})
     static forGameMasterShow: (options?: RequestOptions) => Promise<Campaign>
     
-    static afterGameMasterShowRequest(options: RequestOptions) {
+    static afterForGameMasterShowRequest(options: RequestOptions) {
       this.afterShowRequest(options)
     }
 
@@ -71,6 +72,43 @@ export class Campaign extends BaseModel {
 
     afterForGameMasterUpdateRequest(options: RequestOptions) {
       this.afterUpdateRequest(options)
+    }
+
+    @Route("GET", {url: "/api/campaign/for-player/:campaignId"})
+    static forPlayerShow: (options?: RequestOptions) => Promise<Campaign>
+    
+    static afterForPlayerShowRequest(options: RequestOptions) {
+      this.afterShowRequest(options)
+    }
+
+    @Route("GET", {url: "/api/campaign/for-player"})
+    static forPlayerIndex: (options?: RequestOptions) => Promise<ModelCollection<Campaign>>
+    
+    static afterForPlayerIndexRequest(options: RequestOptions) {
+        this.afterIndexRequest(options)
+    }
+
+
+
+    //methods
+    extractPlayerUsers(): ModelCollection<User> {
+      let playerUsers = new ModelCollection<User>()
+      this.linksToUsers.forEach((linkToUsers)=>{
+        if (linkToUsers.category == "PLAYER") {
+          playerUsers.push(linkToUsers.user)
+        }
+      })
+      return playerUsers
+    }
+
+    extractGameMasters(): ModelCollection<User> {
+      let gameMasters = new ModelCollection<User>()
+      this.linksToUsers.forEach((it)=>{
+        if (it.category == "GAME_MASTER") {
+          gameMasters.push(it.user)
+        }
+      })
+      return gameMasters
     }
 
     

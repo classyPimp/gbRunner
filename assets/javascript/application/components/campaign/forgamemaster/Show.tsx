@@ -6,6 +6,9 @@ import { Modal } from '../../shared/Modal'
 import autobind from 'autobind-decorator'
 import { CampaignComponents } from '../CampaignComponents'
 import { ModelCollection } from '../../../../modelLayer/ModelCollection';
+import { User } from '../../../models/User'
+import { UserComponents } from '../../user/UserComponents'
+import { UserToCampaignInvite } from '../../../models/UserToCampaignInvite'
 
 export class Show extends BaseReactComponent {
 
@@ -16,19 +19,21 @@ export class Show extends BaseReactComponent {
     state: {
       campaign: Campaign
       playerUsers: ModelCollection<User>
+      gameMasters: ModelCollection<User>
     } = {
       campaign: null,
-      playerUsers: null
+      playerUsers: null,
+      gameMasters: null
     }
 
     modal: Modal
-
     
     componentDidMount() {
       Campaign.forGameMasterShow({wilds: {"campaignId": this.props.match.params.campaignId}}).then((campaign)=>{
          let playerUsers = campaign.extractPlayerUsers()
          let gameMasters = campaign.extractGameMasters()
-         this.setState({campaign})
+         console.log("calling setstate")
+         this.setState({campaign, playerUsers, gameMasters})
       })
     }
 
@@ -42,9 +47,9 @@ export class Show extends BaseReactComponent {
           <Modal
             ref={(it)=>{this.modal = it}}
           />
-          <p>
+          <h1>
             {this.state.campaign.name}
-          </p>
+          </h1>
           <p>
             {this.state.campaign.description}
           </p>
@@ -52,7 +57,29 @@ export class Show extends BaseReactComponent {
             edit
           </button>
           <div>
-
+            <h1>
+              game masters
+            </h1>
+            {this.state.gameMasters.map((gameMaster)=>{
+               return <div>
+                 <p>
+                   {gameMaster.name}
+                 </p>
+               </div>
+            })}
+          </div>
+          <div>
+            <h1>
+              players:
+            </h1>
+            {this.state.playerUsers.map((playerUser)=>{
+              return <div key={playerUser.id}>
+                {playerUser.name}
+              </div>
+            })}
+            <button onClick={this.initPLayerAddition}>
+              add player
+            </button>
           </div>
         </div>
     }
@@ -75,6 +102,32 @@ export class Show extends BaseReactComponent {
       this.forceUpdate()
     }
 
+    @autobind
+    initPLayerAddition() {
+      this.modal.open(
+        <UserComponents.Index
+          selectable={true}
+          onSelect={this.openInviteConfirmation}
+        />
+      )
+    }    
 
+    @autobind
+    openInviteConfirmation(user: User) {
+      let userToCampaignInvite = new UserToCampaignInvite()
+      userToCampaignInvite.userThatIsInvitedId = user.id
+      userToCampaignInvite.create({wilds: {campaignId: this.props.match.params.campaignId}}).then((userToCampaignInvite)=>{
+        this.modal.open(
+          <div>
+            <p>
+              invitation token, copy and send it to user:
+            </p>
+            <p>
+              {`${window.location.hostname}:${window.location.port}/user-to-campaign-invite/${userToCampaignInvite.invitationToken}`}
+            </p>
+          </div>
+        )
+      })
+    }
 
 }

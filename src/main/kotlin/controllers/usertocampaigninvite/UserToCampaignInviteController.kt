@@ -4,10 +4,12 @@ import composers.usertocampaigninvite.UserToCampaignInviteAcceptInviteComposer
 import composers.usertocampaigninvite.UserToCampaignInviteCreateComposer
 import controllers.ApplicationControllerBase
 import models.genericgenericlink.daos.GenericGenericLinkDaos
+import models.usertocampaigninvite.tojsonserializers.UserToCampaignShowToJsonSerializer
+import models.usertocampaigninvite.daos.UserToCampaignInviteDaos
+import models.usertocampaigninvite.tojsonserializers.UserToCampaignInviteAcceptInviteToJsonSerializer
 import models.usertocampaigninvite.tojsonserializers.UserToCampaignInviteCreateToJsonSerializer
 import router.src.ServletRequestContext
-import javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR
-import javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED
+import javax.servlet.http.HttpServletResponse.*
 
 class UserToCampaignInviteController(context: ServletRequestContext) : ApplicationControllerBase(context) {
 
@@ -55,7 +57,7 @@ class UserToCampaignInviteController(context: ServletRequestContext) : Applicati
     }
 
     fun acceptInvite() {
-        val inviteToken: String? = routeParams().get("inviteToken")
+        val inviteToken: String? = routeParams().get("invitationToken").toString()
         if (inviteToken == null) {
             sendError(SC_INTERNAL_SERVER_ERROR)
             return
@@ -69,6 +71,49 @@ class UserToCampaignInviteController(context: ServletRequestContext) : Applicati
                 }
 
         val composer = UserToCampaignInviteAcceptInviteComposer(inviteToken)
+
+        composer.onError = {
+            renderJson(
+                    UserToCampaignInviteAcceptInviteToJsonSerializer.onError(it)
+            )
+        }
+
+        composer.onSuccess = {
+            renderJson(
+                    UserToCampaignInviteAcceptInviteToJsonSerializer.onSuccess(it)
+            )
+        }
+
+        composer.run()
+
+    }
+
+    fun show() {
+        val invitationToken = routeParams().get("invitationToken")?.toString()
+        if (invitationToken == null) {
+            sendError(SC_INTERNAL_SERVER_ERROR)
+            return
+        }
+        val userToCampaignInvite = UserToCampaignInviteDaos.show.byToken(invitationToken)
+
+        if (userToCampaignInvite == null) {
+            sendError(SC_NOT_FOUND)
+            return
+        }
+
+        currentUser.checkPermission()
+                .shouldBeLoggedIn()
+                .should {
+                    userToCampaignInvite.userThatIsInvitedId!! == currentUser.userModel!!.id!!
+                }
+                .ifNot {
+                    sendError(SC_UNAUTHORIZED)
+                    return
+                }
+
+        renderJson(
+                UserToCampaignShowToJsonSerializer.onSuccess(userToCampaignInvite)
+        )
 
     }
 

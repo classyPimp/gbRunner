@@ -9,6 +9,7 @@ object UserToCampaignInviteCreateFactory {
             it.campaignId = campaignId
             it.userThatInvitesId = userThatInvitesId
             it.userThatIsInvitedId = params.userThatIsInvitedId
+            it.invitationToken = UserToCampaignInvite.generateInvitationToken()
         }
     }
 

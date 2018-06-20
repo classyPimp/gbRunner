@@ -15,6 +15,7 @@ object AppHikariConfig {
             config.username = userName
             config.password = password
             config.driverClassName = driverClassName
+            //TODO: set max poolsize from config file
         }
 
         return config
