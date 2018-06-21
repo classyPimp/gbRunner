@@ -12,6 +12,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
 
     fun createForPlayerAsPrimaryPlayerCharacterScenario() {
         validateGenericGenericLink()
+        validateLinksToGifts()
+        validateLinksToWords()
     }
 
     private fun validateGenericGenericLink() {
@@ -22,6 +24,14 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
                 throw IllegalStateException()
             }
         }
+    }
+
+    private fun validateLinksToGifts() {
+
+    }
+
+    private fun validateLinksToWords() {
+
     }
 
 }

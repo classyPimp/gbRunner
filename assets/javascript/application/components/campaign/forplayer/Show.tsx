@@ -60,7 +60,7 @@ export class Show extends BaseReactComponent {
               game masters
             </h1>
             {this.state.gameMasters.map((gameMaster)=>{
-               return <div>
+               return <div key={gameMaster.id}>
                  <p>
                    {gameMaster.name}
                  </p>
@@ -82,14 +82,14 @@ export class Show extends BaseReactComponent {
               <div className="pure-menu pure-menu-horizontal">
                   <ul className="pure-menu-list">
                       <li className="pure-menu-item">
-                          <Link to={`/campaign/for-player/${this.props.match.params.campaignId}/game-character-show`} className="pure-menu-link">
+                          <Link to={`/campaign/for-player/${this.props.match.params.campaignId}/primary-character`} className="pure-menu-link">
                               my character
                           </Link>
                       </li>
                   </ul>
               </div>
               <Switch>
-                  <Route path={`${this.props.match.url}/game-character`} component={GameCharacterComponents.forPlayer.asprimaryplayercharacter.Show}/>
+                  <Route path={`/campaign/for-player/:campaignId/primary-character`} component={GameCharacterComponents.forPlayer.asprimaryplayercharacter.Show}/>
               </Switch>
           </div>
         </div>

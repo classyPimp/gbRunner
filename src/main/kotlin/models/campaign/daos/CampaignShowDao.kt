@@ -67,8 +67,10 @@ object CampaignShowDao {
                 .where(
                         table.ID.eq(campaignId).and(
                                 GENERIC_GENERIC_LINKS.RIGHT_MODEL_ID.eq(userAsPlayerId)
-                                        .and(GENERIC_GENERIC_LINKS.RIGHT_MODEL_TYPE.eq(User::class.simpleName))
-                                        .and(GENERIC_GENERIC_LINKS.CATEGORY.eq(GenericGenericLink.Categories.UserToCampaignLink.PLAYER.toString()))
+                        ).and(
+                                GENERIC_GENERIC_LINKS.RIGHT_MODEL_TYPE.eq(User::class.simpleName)
+                        ).and(
+                                GENERIC_GENERIC_LINKS.CATEGORY.eq(GenericGenericLink.Categories.UserToCampaignLink.PLAYER.toString())
                         )
                 )
                 .limit(1)

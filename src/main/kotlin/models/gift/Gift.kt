@@ -14,6 +14,11 @@ import org.apache.commons.lang3.mutable.Mutable
 @IsModel(jooqTable = Gifts::class)
 class Gift {
 
+    enum class Categories {
+        LESSER_GIFT,
+        GREATER_GIFT
+    }
+
     val record: GiftRecord by lazy { GiftRecord(this) }
 
     @TableField(name = "ID")
@@ -34,6 +39,9 @@ class Gift {
 
     @TableField(name = "DESCRIPTION")
     var description: String? = null
+
+    @TableField(name = "CATEGORY")
+    var category: String? = null
 
     @TableField(name = "SPECIFIC_FOR_CAMPAIGN_ID")
     var specificForCampaignId: Long? = null

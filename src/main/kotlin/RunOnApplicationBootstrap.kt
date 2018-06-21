@@ -5,6 +5,7 @@ import dependencymanagement.MicroFrameworkDependencyManager
 import hilfhund.routes.HilfHundRoutesAdder
 import models.user.services.SuperUserManager
 import models.userrole.PredefinedUserRoleManager
+import models.word.tojsonserializers.PredefinedWordManager
 
 
 /**
@@ -18,6 +19,7 @@ class RunOnApplicationBootstrap: Runnable {
         drawRoutes()
         ensurePredefinedRolesArePersistedInDb()
         ensureSuperUserIsPersistedInDb()
+        ensurePredefinedWordsAndGiftsArePersisted()
     }
 
     private fun initializeApplicationComponent() {
@@ -40,6 +42,10 @@ class RunOnApplicationBootstrap: Runnable {
 
     private fun ensureSuperUserIsPersistedInDb() {
         SuperUserManager.ensureSuperUserExistsInDatabaseOtherwiseCreateIt()
+    }
+
+    private fun ensurePredefinedWordsAndGiftsArePersisted() {
+        PredefinedWordManager.ensurePredefinedWordsAndGiftsArePersisted()
     }
 
 

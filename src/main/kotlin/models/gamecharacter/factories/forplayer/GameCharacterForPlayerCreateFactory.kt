@@ -2,7 +2,11 @@ package models.gamecharacter.factories.forplayer
 
 import models.gamecharacter.GameCharacter
 import models.gamecharacter.GameCharacterRequestParametersWrapper
+import models.genericgenericlink.GenericGenericLink
+import models.genericgenericlink.factories.charactertogift.CharacterToGiftGenericGenericLinkFactory
+import models.genericgenericlink.factories.gamecharactertoword.GameCharacterToWordGenericGenericLinkCreateFactory
 import models.genericgenericlink.factories.usertocharacterlink.UserToCharacterAsPlayerGenericGenericLinkCreateFactory
+import models.word.factories.WordCreateFactory
 
 object GameCharacterForPlayerCreateFactory {
     fun create(params: GameCharacterRequestParametersWrapper, campaignId: Long, playerId: Long): GameCharacter {
@@ -34,6 +38,12 @@ object GameCharacterForPlayerCreateFactory {
             it.effortTotal = 0
             it.effortAvailable = 0
             it.linksToUsers = UserToCharacterAsPlayerGenericGenericLinkCreateFactory.create(playerId = playerId)
+            it.linksToGifts = params.linksToGifts?.mapTo(mutableListOf<GenericGenericLink>()) {
+                CharacterToGiftGenericGenericLinkFactory.create(it)
+            }
+            it.linksToWords = params.linksToWords?.mapTo(mutableListOf()) {
+                GameCharacterToWordGenericGenericLinkCreateFactory.create(it)
+            }
         }
     }
 

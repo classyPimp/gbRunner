@@ -7,6 +7,7 @@ import java.sql.Timestamp
 import models.uploadedimage.UploadedImageRequestParametersWrapper
 import models.characterblueprint.CharacterBlueprintRequestParametersWrapper
 import models.genericgenericlink.GenericGenericLinkRequestParametersWrapper
+import models.word.Word
 
 class GameCharacterRequestParametersWrapper(val requestParameters: IParam) {
 
@@ -52,12 +53,29 @@ class GameCharacterRequestParametersWrapper(val requestParameters: IParam) {
         }
     }
     val linksToUsers: MutableList<GenericGenericLinkRequestParametersWrapper>? by lazy {
-    requestParameters.get("linksToUsers")?.paramList()?.let {
-        it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
-            GenericGenericLinkRequestParametersWrapper(it)
+        requestParameters.get("linksToUsers")?.paramList()?.let {
+            it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
+                GenericGenericLinkRequestParametersWrapper(it)
+            }
         }
     }
+
+    val linksToWords: MutableList<GenericGenericLinkRequestParametersWrapper>? by lazy {
+        requestParameters.get("linkstToWords")?.paramList()?.let {
+            it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
+                GenericGenericLinkRequestParametersWrapper(it)
+            }
+        }
     }
+
+    val linksToGifts: MutableList<GenericGenericLinkRequestParametersWrapper>? by lazy {
+        requestParameters.get("linkstToGifts")?.paramList()?.let {
+            it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
+                GenericGenericLinkRequestParametersWrapper(it)
+            }
+        }
+    }
+
 
 
 }

@@ -5,7 +5,25 @@ import orm.wordgeneratedrepository.WordRecord
 import models.word.Word
 
 object WordShowDao {
+    val table = Words.WORDS
+    fun existsWithSuchName(name: String): Boolean {
+        val word = WordRecord.GET()
+                .where(table.NAME.eq(name))
+                .executeGetFirstOrNull()
+        return (word != null)
+    }
 
+    fun byId(wordId: Long): Word? {
+        return WordRecord.GET()
+                .where(table.ID.eq(wordId))
+                .executeGetFirstOrNull()
+    }
+
+    fun forUpdate(wordId: Long): Word? {
+        return WordRecord.GET()
+                .where(table.ID.eq(wordId))
+                .executeGetFirstOrNull()
+    }
 
 
 }

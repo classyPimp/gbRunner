@@ -2,6 +2,9 @@ import { BaseReactComponent } from "../../../../../reactUtils/BaseReactComponent
 import * as React from 'react'
 import { GameCharacter } from '../../../../models/GameCharacter'
 import { Link } from 'react-router-dom'
+import autobind from 'autobind-decorator'
+import { Modal } from '../../../shared/Modal'
+import { GameCharacterComponents } from '../../GameCharacterComponents'
 
 export class Show extends BaseReactComponent {
 
@@ -13,8 +16,13 @@ export class Show extends BaseReactComponent {
       noCharacterCreated: false
     }
 
+    modal: Modal
+
     componentDidMount() {
-        GameCharacter.forPlayerAsPrimaryCharacterShow({wilds: {campaignId: this.props.match.params.campaignId}}).then((gameCharacter)=>{
+        GameCharacter.forPlayerPrimaryCharacterOfCampaignShow({wilds: {campaignId: this.props.match.params.campaignId}}).then((gameCharacter)=>{
+          gameCharacter.validate()
+          console.log(gameCharacter.errors)
+          console.log(gameCharacter.containsSpecificError("general", "NO_CHARACTER_CREATED"))
           if (gameCharacter.containsSpecificError("general", "NO_CHARACTER_CREATED")) {
             this.setState({noCharacterCreated: true})
             return
@@ -26,9 +34,10 @@ export class Show extends BaseReactComponent {
     render(){
         let gameCharacter = this.state.gameCharacter
         return <div>
+          <Modal ref={(it)=>{this.modal = it}}/>
           {this.state.noCharacterCreated && 
             <div>
-              <button>
+              <button onClick={this.initCreateCharacter}>
                 create character
               </button>
             </div>
@@ -41,6 +50,15 @@ export class Show extends BaseReactComponent {
             </div>
           }
         </div>
+    }
+
+    @autobind
+    initCreateCharacter() {
+      this.modal.open(
+        <GameCharacterComponents.forPlayer.asprimaryplayercharacter.New
+          campaignId={this.props.match.params.campaignId}
+        />
+      )
     }
 
 }

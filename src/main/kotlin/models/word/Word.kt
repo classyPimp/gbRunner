@@ -8,6 +8,7 @@ import org.jooq.generated.tables.Campaigns
 import models.campaign.Campaign
 import org.jooq.generated.tables.GenericGenericLinks
 import models.genericgenericlink.GenericGenericLink
+import models.gift.Gift
 
 @IsModel(jooqTable = Words::class)
 class Word {
@@ -39,6 +40,8 @@ class Word {
     @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "RIGHT_MODEL_ID", polymorphicTypeField = "RIGHT_MODEL_TYPE")
     var linksToCharacters: MutableList<GenericGenericLink>? = null
 
+    @HasMany(model = Gift::class, fieldOnThis = "ID", fieldOnThat = "WORD_ID")
+    var gifts: MutableList<Gift>? = null
 
 }
 

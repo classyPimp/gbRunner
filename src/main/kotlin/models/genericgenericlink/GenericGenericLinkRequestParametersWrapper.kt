@@ -1,6 +1,9 @@
 package models.genericgenericlink
 
 import models.genericgenericlink.GenericGenericLink
+import models.gift.GiftRequestParametersWrapper
+import models.gift.factories.GiftCreateFactory
+import models.word.WordRequestParametersWrapper
 import utils.requestparameters.IParam
 
 import java.sql.Timestamp
@@ -19,6 +22,15 @@ class GenericGenericLinkRequestParametersWrapper(val requestParameters: IParam) 
     val subCategory: String? by lazy { requestParameters.get("subCategory")?.string }
     val currentStatus: String? by lazy { requestParameters.get("currentStatus")?.string }
     val description: String? by lazy { requestParameters.get("description")?.string }
-
+    val gift: GiftRequestParametersWrapper? by lazy {
+        requestParameters.get("gift")?.let {
+            GiftRequestParametersWrapper(it)
+        }
+    }
+    val word: WordRequestParametersWrapper? by lazy {
+        requestParameters.get("word")?.let {
+            WordRequestParametersWrapper(it)
+        }
+    }
 
 }

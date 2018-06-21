@@ -7,6 +7,8 @@ import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute'
 import { Campaign } from "./Campaign"
 import { User } from './User'
 import { GameCharacter } from './GameCharacter'
+import { Word } from './Word'
+import { Gift } from './Gift'
 
 export class GenericGenericLink extends BaseModel {
 
@@ -53,5 +55,11 @@ export class GenericGenericLink extends BaseModel {
 
     @HasMany("GameCharacter")
     gameCharacters: ModelCollection<GameCharacter>
+
+    @HasOne("Word")
+    word: Word
+
+    @HasOne("Gift")
+    gift: Gift
 
 }

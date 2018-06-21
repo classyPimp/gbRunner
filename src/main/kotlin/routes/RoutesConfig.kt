@@ -3,11 +3,14 @@ package routes
 import controllers.HomeController
 import controllers.campaign.forgamemaster.CampaignForGameMasterController
 import controllers.campaign.forplayer.CampaignForPlayerController
+import controllers.gamecharacter.forplayer.primarycharacterofcampaign.GameCharacterForPlayerPrimaryCharacterOfCampaignController
+import controllers.gift.GiftController
 import controllers.session.SessionController
 import controllers.user.UserController
 import controllers.user.UserRegistrationController
 import controllers.user.management.UserManagementController
 import controllers.usertocampaigninvite.UserToCampaignInviteController
+import controllers.word.WordController
 import router.RoutesDrawer
 import router.src.Router
 import servletUtils.SimpleFileServer
@@ -89,6 +92,42 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                     }
                     get("/:campaignId") {
                         CampaignForPlayerController(it).show()
+                    }
+                }
+            }
+
+            namespace("/game-character") {
+                namespace("/for-player") {
+                    namespace("/primary-character/:campaignId") {
+                        get("") {
+                            GameCharacterForPlayerPrimaryCharacterOfCampaignController(it).show()
+                        }
+                        post("") {
+                            GameCharacterForPlayerPrimaryCharacterOfCampaignController(it).create()
+                        }
+                    }
+                }
+            }
+
+            namespace("/word") {
+                get("") {
+                    WordController(it).index()
+                }
+                get("/:wordId") {
+                    WordController(it).show()
+                }
+                post("") {
+                    WordController(it).create()
+                }
+                put("/:wordId") {
+                    WordController(it).update()
+                }
+            }
+
+            namespace("/gift") {
+                namespace("/of-word/:wordId") {
+                    get("") {
+                        GiftController(it).ofWordIndex()
                     }
                 }
             }

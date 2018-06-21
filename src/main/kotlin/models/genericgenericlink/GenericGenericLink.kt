@@ -3,7 +3,9 @@ package models.genericgenericlink
 import models.campaign.Campaign
 import models.characterblueprint.CharacterBlueprint
 import models.gamecharacter.GameCharacter
+import models.gift.Gift
 import models.user.User
+import models.word.Word
 import org.jooq.generated.tables.GenericGenericLinks
 import orm.annotations.*
 import orm.genericgenericlinkgeneratedrepository.GenericGenericLinkRecord
@@ -60,7 +62,7 @@ class GenericGenericLink {
     @TableField(name = "DESCRIPTION")
     var description: String? = null
 
-    @BelongsTo(model = User::class, fieldOnThat = "ID", fieldOnThis = "LEFT_MODEL_ID")
+    @BelongsTo(model = User::class, fieldOnThat = "ID", fieldOnThis = "RIGHT_MODEL_ID")
     var user: User? = null
 
     @BelongsTo(model = Campaign::class, fieldOnThis = "LEFT_MODEL_ID", fieldOnThat = "ID")
@@ -71,6 +73,12 @@ class GenericGenericLink {
 
     @BelongsTo(model = CharacterBlueprint::class, fieldOnThat = "ID", fieldOnThis = "RIGHT_MODEL_ID")
     var characterBlueprint: CharacterBlueprint? = null
+
+    @BelongsTo(model = Word::class, fieldOnThat = "ID", fieldOnThis = "RIGHT_MODEL_ID")
+    var word: Word? = null
+
+    @BelongsTo(model = Gift::class, fieldOnThis = "RIGHT_MODEL_ID", fieldOnThat = "ID")
+    var gift: Gift? = null
 
 }
 

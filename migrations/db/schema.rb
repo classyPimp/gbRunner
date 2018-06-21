@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180619093346) do
+ActiveRecord::Schema.define(version: 20180621063447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20180619093346) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "avatars", force: :cascade do |t|
+    t.string "file_name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_avatars_on_user_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -151,6 +159,7 @@ ActiveRecord::Schema.define(version: 20180619093346) do
     t.bigint "specific_for_campaign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
     t.index ["specific_for_campaign_id"], name: "index_gifts_on_specific_for_campaign_id"
     t.index ["word_id"], name: "index_gifts_on_word_id"
   end
@@ -260,6 +269,7 @@ ActiveRecord::Schema.define(version: 20180619093346) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "avatars", "users"
   add_foreign_key "dominion_expenditures", "game_characters"
   add_foreign_key "effort_expenditures", "game_characters"
   add_foreign_key "game_characters", "campaigns"

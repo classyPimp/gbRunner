@@ -6,6 +6,7 @@ import java.sql.Timestamp
 import models.uploadedimage.UploadedImage
 import models.characterblueprint.CharacterBlueprint
 import models.genericgenericlink.GenericGenericLink
+import models.gift.Gift
 import org.jooq.generated.tables.GameCharacters
 
 @IsModel(jooqTable = GameCharacters::class)
@@ -113,6 +114,12 @@ class GameCharacter {
 
     @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "LEFT_MODEL_ID", polymorphicTypeField = "LEFT_MODEL_TYPE")
     var linksToUsers: MutableList<GenericGenericLink>? = null
+
+    @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThat = "LEFT_MODEL_ID", fieldOnThis = "ID", polymorphicTypeField = "LEFT_MODEL_TYPE")
+    var linksToWords: MutableList<GenericGenericLink>? = null
+
+    @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "LEFT_MODEL_ID", polymorphicTypeField = "LEFT_MODEL_TYPE")
+    var linksToGifts: MutableList<GenericGenericLink>? = null
 
 }
 

@@ -3,6 +3,9 @@ package models.gamecharacter.tojsonserializers.forplayer
 import models.gamecharacter.GameCharacter
 import orm.gamecharactergeneratedrepository.GameCharacterToJsonSerializer
 
+/**
+ * Created by Муса on 21.06.2018.
+ */
 object GameCharacterForPlayerCreateToJsonSerializer {
 
     fun onSuccess(gameCharacter: GameCharacter): String {

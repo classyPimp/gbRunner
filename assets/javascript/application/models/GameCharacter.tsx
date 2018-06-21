@@ -109,11 +109,24 @@ export class GameCharacter extends BaseModel {
     @HasMany("GenericGenericLink")
     linksToUsers: ModelCollection<GenericGenericLink>
 
+    @HasMany("GenericGenericLink")
+    linksToWords: ModelCollection<GenericGenericLink>
 
-    @Route("GET", {url: "/api/game-character/:campaignId"})
-    static forPlayerAsPrimaryCharacterShow: (options?: RequestOptions) => Promise<GameCharacter>
+    @HasMany("GenericGenericLink")
+    linksToGifts: ModelCollection<GenericGenericLink>
 
-    static afterForPlayerAsPrimaryCharacterShowRequest(options: RequestOptions) {
+    @Route("GET", {url: "/api/game-character/for-player/primary-character/:campaignId"})
+    static forPlayerPrimaryCharacterOfCampaignShow: (options?: RequestOptions) => Promise<GameCharacter>
+
+    static afterForPlayerPrimaryCharacterOfCampaignShowRequest(options: RequestOptions) {
       this.afterShowRequest(options)
     }
-}
+
+    @Route("POST", {url: "/api/game-character/for-player/primary-character/:campaignId"})
+    forPlayerPrimaryCharacterOfCampaignCreate: (options?: RequestOptions) => Promise<GameCharacter>
+
+    afterForPlayerPrimaryCharacterOfCampaignCreateRequest(options: RequestOptions) {
+      this.afterCreateRequest(options)
+    }
+
+}    

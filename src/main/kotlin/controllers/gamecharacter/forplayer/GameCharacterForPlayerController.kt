@@ -1,12 +1,11 @@
 package controllers.gamecharacter.forplayer
 
-import composers.gamecharacter.forplayer.GameCharacterForPlayerCreateComposer
+import composers.gamecharacter.forplayer.primarycharacterofcampaign.GameCharacterForPlayerPrimaryCharacterOfCampaignCreateComposer
 import controllers.ApplicationControllerBase
 import models.gamecharacter.GameCharacter
 import models.gamecharacter.daos.GameCharacterDaos
 import models.gamecharacter.tojsonserializers.forplayer.GameCharacterForPlayerCreateToJsonSerializer
 import models.gamecharacter.tojsonserializers.forplayer.GameCharacterForPlayerShowToJsonSerializer
-import models.genericgenericlink.GenericGenericLink
 import models.genericgenericlink.daos.GenericGenericLinkDaos
 import router.src.ServletRequestContext
 import javax.servlet.http.HttpServletResponse.*
@@ -30,7 +29,7 @@ class GameCharacterForPlayerController(context: ServletRequestContext) : Applica
                     return
                 }
 
-        val composer = GameCharacterForPlayerCreateComposer(
+        val composer = GameCharacterForPlayerPrimaryCharacterOfCampaignCreateComposer(
                 params = requestParams(),
                 campaignId = campaignId,
                 playerId = currentUser.userModel!!.id!!

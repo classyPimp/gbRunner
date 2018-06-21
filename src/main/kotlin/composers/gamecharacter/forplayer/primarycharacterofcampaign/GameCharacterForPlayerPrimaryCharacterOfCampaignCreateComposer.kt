@@ -1,4 +1,4 @@
-package composers.gamecharacter.forplayer
+package composers.gamecharacter.forplayer.primarycharacterofcampaign
 
 import utils.composer.ComposerBase
 import models.gamecharacter.GameCharacter
@@ -10,7 +10,7 @@ import orm.utils.TransactionRunner
 import utils.composer.composerexceptions.InvalidRequestParametersError
 import utils.requestparameters.IParam
 
-class GameCharacterForPlayerCreateComposer(
+class GameCharacterForPlayerPrimaryCharacterOfCampaignCreateComposer(
         val params: IParam,
         val campaignId: Long,
         val playerId: Long

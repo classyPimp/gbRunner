@@ -33,10 +33,19 @@ export class Gift extends BaseModel {
     @Property
     specificForCampaignId: number
 
+    @Property
+    category: string
+
     @HasOne("Campaign")
     specificForCampaign: Campaign
 
     @HasOne("Word")
     word: Word
 
+    @Route("GET", {url: "/api/gifts/of-word/:wordId"})
+    static ofWordIndex: (options?: RequestOptions) => Promise<ModelCollection<Gift>>
+
+    static afterOfWordIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
 }
