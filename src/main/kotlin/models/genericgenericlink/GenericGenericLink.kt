@@ -23,6 +23,13 @@ class GenericGenericLink {
         enum class UserToCharacterLink {
             PRIMARY_PLAYER_CHARACTER
         }
+        enum class CharacterToGiftLink {
+            CHARACTER_TO_GIFT
+        }
+        enum class CharacterToWordLink {
+            CHARACTER_TO_WORD
+        }
+
     }
 
 

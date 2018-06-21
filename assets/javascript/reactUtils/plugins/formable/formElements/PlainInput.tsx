@@ -94,6 +94,9 @@ export class PlainInputElement extends BaseReactComponent<
         if (this.props.parseAsInt) {
           newValue = parseInt(newValue)
         }
+        if (newValue === "") {
+            newValue = null
+        }
         this.props.model.properties[this.props.propertyName] = newValue
     }
 

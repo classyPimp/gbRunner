@@ -25,5 +25,12 @@ object WordShowDao {
                 .executeGetFirstOrNull()
     }
 
+    fun exists(id: Long): Boolean {
+        val word = WordRecord.GET()
+                .where(table.ID.eq(id))
+                .executeGetFirstOrNull()
+        return word != null
+    }
+
 
 }

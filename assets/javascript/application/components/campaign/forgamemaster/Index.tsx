@@ -14,7 +14,6 @@ export class Index extends BaseReactComponent {
 
     componentDidMount() {
         Campaign.forGameMasterIndex().then((campaigns)=>{
-            console.log(campaigns)
             this.setState({campaigns})
         })
     }

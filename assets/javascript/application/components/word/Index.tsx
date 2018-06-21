@@ -19,7 +19,7 @@ export class Index extends BaseReactComponent {
 
     componentDidMount() {
       Word.index().then((words)=>{
-        this.setState(words)
+        this.setState({words})
       })
     }
 

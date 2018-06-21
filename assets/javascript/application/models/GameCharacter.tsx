@@ -3,7 +3,7 @@ import { BaseModel } from '../../modelLayer/BaseModel'
 import { HasOne } from '../../modelLayer/annotations/HasOne'
 import { HasMany } from '../../modelLayer/annotations/HasMany'
 import { ModelCollection } from '../../modelLayer/ModelCollection'
-import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute'
+import { RequestOptions, Route } from '../../modelLayer/annotations/ModelRoute';
 
 import { UploadedImage } from './UploadedImage'
 import { CharacterBlueprint } from './CharacterBlueprint'
@@ -11,7 +11,7 @@ import { GenericGenericLink } from './GenericGenericLink'
 
 export class GameCharacter extends BaseModel {
 
-    static className = "character"
+    static className = "gameCharacter"
 
     @Property
     id: number
@@ -124,6 +124,10 @@ export class GameCharacter extends BaseModel {
 
     @Route("POST", {url: "/api/game-character/for-player/primary-character/:campaignId"})
     forPlayerPrimaryCharacterOfCampaignCreate: (options?: RequestOptions) => Promise<GameCharacter>
+
+    beforeForPlayerPrimaryCharacterOfCampaignCreateRequest(options: RequestOptions) {
+      this.beforeCreateRequest(options)
+    }
 
     afterForPlayerPrimaryCharacterOfCampaignCreateRequest(options: RequestOptions) {
       this.afterCreateRequest(options)

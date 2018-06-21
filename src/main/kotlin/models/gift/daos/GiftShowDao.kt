@@ -28,5 +28,13 @@ object GiftShowDao {
         return (gift != null)
     }
 
+    fun exists(id: Long): Boolean {
+        val gift = GiftRecord.GET()
+                .where(table.ID.eq(id))
+                .executeGetFirstOrNull()
+
+        return gift != null
+    }
+
 
 }

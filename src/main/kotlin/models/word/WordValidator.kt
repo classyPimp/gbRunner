@@ -15,6 +15,21 @@ class WordValidator(model: Word) : WordValidatorTrait(model, model.record.valida
         validateDescription()
     }
 
+    fun whenGameCharacterForPlayerPrimaryCharacterCreateScenario() {
+        validateExistance()
+    }
+
+    private fun validateExistance() {
+        val id = model.id
+        if (id == null) {
+            throw IllegalStateException()
+        }
+        if (!WordDaos.show.exists(id)) {
+            validationManager.addGeneralError("does not exist")
+        }
+    }
+
+
     private fun validateDescription() {
         val description = model.description
         if (description == null || description.isBlank()) {
@@ -34,7 +49,6 @@ class WordValidator(model: Word) : WordValidatorTrait(model, model.record.valida
             return
         }
     }
-
 
 
 }

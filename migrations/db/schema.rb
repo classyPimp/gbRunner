@@ -24,14 +24,6 @@ ActiveRecord::Schema.define(version: 20180621063447) do
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
-  create_table "avatars", force: :cascade do |t|
-    t.string "file_name"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_avatars_on_user_id"
-  end
-
   create_table "campaigns", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -269,7 +261,6 @@ ActiveRecord::Schema.define(version: 20180621063447) do
   end
 
   add_foreign_key "accounts", "users"
-  add_foreign_key "avatars", "users"
   add_foreign_key "dominion_expenditures", "game_characters"
   add_foreign_key "effort_expenditures", "game_characters"
   add_foreign_key "game_characters", "campaigns"

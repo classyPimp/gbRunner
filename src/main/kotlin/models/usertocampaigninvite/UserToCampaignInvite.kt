@@ -7,7 +7,7 @@ import orm.usertocampaigninvitegeneratedrepository.UserToCampaignInviteRecord
 import java.sql.Timestamp
 import org.jooq.generated.tables.Users
 import models.user.User
-import com.sun.deploy.util.Base64Wrapper.encodeToString
+//import com.sun.deploy.util.Base64Wrapper.encodeToString
 import java.util.Base64.getUrlEncoder
 import org.apache.commons.lang3.RandomUtils.nextBytes
 import java.security.SecureRandom
@@ -66,7 +66,6 @@ class UserToCampaignInvite {
 
     @BelongsTo(model = Campaign::class, fieldOnThat = "ID", fieldOnThis = "CAMPAIGN_ID")
     var campaign: Campaign? = null
-
 
 }
 

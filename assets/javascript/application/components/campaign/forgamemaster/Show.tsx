@@ -61,7 +61,7 @@ export class Show extends BaseReactComponent {
               game masters
             </h1>
             {this.state.gameMasters.map((gameMaster)=>{
-               return <div>
+               return <div key={gameMaster.id}>
                  <p>
                    {gameMaster.name}
                  </p>

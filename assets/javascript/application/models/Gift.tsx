@@ -42,7 +42,7 @@ export class Gift extends BaseModel {
     @HasOne("Word")
     word: Word
 
-    @Route("GET", {url: "/api/gifts/of-word/:wordId"})
+    @Route("GET", {url: "/api/gift/of-word/:wordId"})
     static ofWordIndex: (options?: RequestOptions) => Promise<ModelCollection<Gift>>
 
     static afterOfWordIndexRequest(options: RequestOptions) {

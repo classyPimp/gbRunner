@@ -2,7 +2,7 @@ import { BaseReactComponent } from "../../../../../reactUtils/BaseReactComponent
 import * as React from 'react'
 import { PlainInputElement } from '../../../../../reactUtils/plugins/formable/formElements/PlainInput';
 import { MixinFormableTrait } from '../../../../../reactUtils/plugins/formable/MixinFormableTrait';
-import { GameCharacter } from '../../../../models/GameCharacter'
+import { GameCharacter } from '../../../../models/GameCharacter';
 import autobind from 'autobind-decorator'
 import { GenericGenericLink } from '../../../../models/GenericGenericLink'
 import { Modal } from '../../../shared/Modal'
@@ -11,6 +11,7 @@ import { Word } from '../../../../models/Word'
 import { Gift } from '../../../../models/Gift'
 import { GiftComponents } from '../../../gift/GiftComponents'
 import { ModelCollection } from '../../../../../modelLayer/ModelCollection'
+import { ErrorsShow } from '../../../shared/ErrorsShow';
 
 export class New extends MixinFormableTrait(BaseReactComponent) {
 
@@ -32,6 +33,9 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
 
     render(){
         return <div>
+            <ErrorsShow
+              errors={this.state.gameCharacter.getErrorsFor("general")}
+            />
             <Modal ref={(it)=>{this.modal = it}}/>
             <PlainInputElement
               model={this.state.gameCharacter}
@@ -107,12 +111,12 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
               }}
             />
             <h3>
-              words and gifts:
+              words and gifts (wordsToChoose {this.state.wordPointsLeft}, point to spend on gifts: {this.state.giftPointsLeft}):
             </h3>
             <div>
-              {this.state.gameCharacter.linksToWords.forEach((linkToWord)=>{
-                return <div>
-                  <p key={linkToWord.word.id}>
+              {this.state.gameCharacter.linksToWords.map((linkToWord)=>{
+                return <div key={linkToWord.word.id}>
+                  <p>
                     {linkToWord.word.name}
                   </p>
                   {this.linksToGiftsWithWordId(linkToWord.word.id).map((linkToGift)=>{
@@ -182,13 +186,16 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
       this.state.gameCharacter.linksToWords.filter((it)=>{
         return it !== linkToWord
       })
-      let wordPointsLeft = this.state.wordPointsLeft -= 1
-      linkToWord.word.gifts.forEach((it)=>{
-        if (it.category == "LESSER_GIFT") {
-          this.state.giftPointsLeft -= 1
+      let wordPointsLeft = this.state.wordPointsLeft += 1
+      this.linksToGiftsWithWordId(linkToWord.word.id).forEach((it)=>{
+        if (it.gift.category == "LESSER_GIFT") {
+          this.state.giftPointsLeft += 1
         } else {
-          this.state.giftPointsLeft -= 2
+          this.state.giftPointsLeft += 2
         }
+        this.state.gameCharacter.linksToGifts.filter((link)=>{
+          return link !== it
+        })
       })
       this.setState({wordPointsLeft})
     }
@@ -196,7 +203,9 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
     @autobind
     initWordAddition() {
       this.modal.open(
-        <WordComponents.Index onSelect={this.onWordSelect}/>
+        <WordComponents.Index 
+          onSelect={this.onWordSelect}
+        />
       )
     }
 
@@ -206,6 +215,7 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
       link.word = word
       this.state.gameCharacter.linksToWords.push(link)
       this.state.wordPointsLeft = this.state.wordPointsLeft -= 1
+      this.modal.close()
       this.forceUpdate()
     }
 
@@ -213,6 +223,7 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
     initGiftForWordAddition(word: Word) {
       this.modal.open(
         <GiftComponents.ofWord.Index
+          wordId={word.id}
           onSelect={(gift: Gift)=>{this.addGift(gift)}}
         />
       )
@@ -223,6 +234,11 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
       this.state.gameCharacter.linksToGifts.filter((it)=>{
         return it !== linkToGift
       })
+      if (linkToGift.gift.category == "LESSER_GIFT") {
+        this.state.giftPointsLeft += 1
+      } else {
+        this.state.giftPointsLeft += 2
+      }
       this.forceUpdate()
     }
 
@@ -236,6 +252,7 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
       } else {
         this.state.giftPointsLeft -= 2
       }
+      this.modal.close()
       this.forceUpdate()
     }
 

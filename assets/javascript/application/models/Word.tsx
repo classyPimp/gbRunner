@@ -39,7 +39,7 @@ export class Word extends BaseModel {
     @HasMany("Gift")
     gifts: ModelCollection<Gift>
 
-    @Route("GET", {url: "/api/words"})
+    @Route("GET", {url: "/api/word"})
     static index: (options?: RequestOptions) => Promise<ModelCollection<Word>>
 
 }
