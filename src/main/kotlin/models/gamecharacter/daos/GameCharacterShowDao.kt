@@ -15,6 +15,20 @@ object GameCharacterShowDao {
                 .join {
                     it.linksToUsers()
                 }
+                .preload {
+                    it.linksToGifts() {
+                        it.where(GENERIC_GENERIC_LINKS.CATEGORY.eq(GenericGenericLink.Categories.CharacterToGiftLink.CHARACTER_TO_GIFT.toString()))
+                        it.preload {
+                            it.gift()
+                        }
+                    }
+                    it.linksToWords() {
+                        it.where(GENERIC_GENERIC_LINKS.CATEGORY.eq(GenericGenericLink.Categories.CharacterToWordLink.CHARACTER_TO_WORD.toString()))
+                        it.preload {
+                            it.word()
+                        }
+                    }
+                }
                 .where(
                         GENERIC_GENERIC_LINKS.CATEGORY.eq(GenericGenericLink.Categories.UserToCharacterLink.PRIMARY_PLAYER_CHARACTER.toString())
                                 .and(

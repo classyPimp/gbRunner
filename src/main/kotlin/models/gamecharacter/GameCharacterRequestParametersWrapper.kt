@@ -61,7 +61,7 @@ class GameCharacterRequestParametersWrapper(val requestParameters: IParam) {
     }
 
     val linksToWords: MutableList<GenericGenericLinkRequestParametersWrapper>? by lazy {
-        requestParameters.get("linkstToWords")?.paramList()?.let {
+        requestParameters.get("linksToWords")?.paramList()?.let {
             it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
                 GenericGenericLinkRequestParametersWrapper(it)
             }
@@ -69,7 +69,7 @@ class GameCharacterRequestParametersWrapper(val requestParameters: IParam) {
     }
 
     val linksToGifts: MutableList<GenericGenericLinkRequestParametersWrapper>? by lazy {
-        requestParameters.get("linkstToGifts")?.paramList()?.let {
+        requestParameters.get("linksToGifts")?.paramList()?.let {
             it.mapTo(mutableListOf<GenericGenericLinkRequestParametersWrapper>()) {
                 GenericGenericLinkRequestParametersWrapper(it)
             }

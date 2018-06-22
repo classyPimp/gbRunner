@@ -6,6 +6,7 @@ import orm.itemgeneratedrepository.ItemRecord
 import java.sql.Timestamp
 import models.itemblueprint.ItemBlueprint
 import models.gamecharacter.GameCharacter
+import models.statmodifier.StatModifier
 
 @IsModel(jooqTable = Items::class)
 class Item {
@@ -67,6 +68,8 @@ class Item {
     @BelongsTo(model = GameCharacter::class, fieldOnThis = "OWNER_ID", fieldOnThat = "ID")
     var gameCharacter: GameCharacter? = null
 
+    @HasMany(model = StatModifier::class, fieldOnThis = "ID", fieldOnThat = "ITEM_ID")
+    var statModifiers: MutableList<StatModifier>? = null
 
 }
 

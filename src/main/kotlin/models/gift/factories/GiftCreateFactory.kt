@@ -12,4 +12,14 @@ object GiftCreateFactory {
         }
     }
 
+    fun whenGameCharacterForPlayerAsPrimaryPlayerCreate(params: GiftRequestParametersWrapper): Gift {
+        return Gift().also {
+            it.id = params.id
+            it.category = params.category
+            it.name = params.name
+            it.wordId = params.wordId
+            it.description = params.description
+        }
+    }
+
 }

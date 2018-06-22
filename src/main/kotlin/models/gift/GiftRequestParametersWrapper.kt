@@ -21,6 +21,7 @@ class GiftRequestParametersWrapper(val requestParameters: IParam) {
     val name: String? by lazy { requestParameters.get("name")?.string }
     val description: String? by lazy { requestParameters.get("description")?.string }
     val specificForCampaignId: Long? by lazy { requestParameters.get("specificForCampaignId")?.long }
+    val category: String? by lazy { requestParameters.get("category")?.string }
     val specificForCampaign: CampaignRequestParametersWrapper? by lazy {
         requestParameters.get("specificForCampaign")?.let {
             CampaignRequestParametersWrapper(it)

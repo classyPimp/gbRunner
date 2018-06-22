@@ -174,6 +174,7 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
       this.state.gameCharacter.forPlayerPrimaryCharacterOfCampaignCreate({wilds: {campaignId: this.props.campaignId.toString()}})
       .then((gameCharacter)=>{
         if (!gameCharacter.isValid()) {
+          console.log(gameCharacter.linksToGifts)
           this.setState({gameCharacter})
         } else {
           alert("success")

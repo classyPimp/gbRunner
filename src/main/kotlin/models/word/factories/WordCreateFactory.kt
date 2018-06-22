@@ -11,4 +11,12 @@ object WordCreateFactory {
         }
     }
 
+    fun whenGameCharacterForPlayerAsPrimaryCharacterCreate(params: WordRequestParametersWrapper): Word {
+        return Word().also {
+            it.id = params.id
+            it.name = params.name
+            it.description = params.description
+        }
+    }
+
 }

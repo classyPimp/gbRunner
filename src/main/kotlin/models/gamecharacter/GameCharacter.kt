@@ -7,6 +7,7 @@ import models.uploadedimage.UploadedImage
 import models.characterblueprint.CharacterBlueprint
 import models.genericgenericlink.GenericGenericLink
 import models.gift.Gift
+import models.statmodifier.StatModifier
 import org.jooq.generated.tables.GameCharacters
 
 @IsModel(jooqTable = GameCharacters::class)
@@ -121,5 +122,7 @@ class GameCharacter {
     @HasManyAsPolymorphic(model = GenericGenericLink::class, fieldOnThis = "ID", fieldOnThat = "LEFT_MODEL_ID", polymorphicTypeField = "LEFT_MODEL_TYPE")
     var linksToGifts: MutableList<GenericGenericLink>? = null
 
+    @HasMany(model = StatModifier::class, fieldOnThat = "GAME_CHARACTER_ID", fieldOnThis = "ID")
+    var statModifiers: MutableList<StatModifier>? = null
 }
 

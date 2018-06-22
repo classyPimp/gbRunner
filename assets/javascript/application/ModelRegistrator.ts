@@ -20,7 +20,7 @@ import { Word } from './models/Word'
 import { UserRole } from './models/UserRole'
 import { UserToUserRoleLink } from './models/UserToUserRoleLink'
 import { UserToCampaignInvite } from './models/UserToCampaignInvite';
-
+import { StatModifier } from './models/StatModifier'
 
 
 export class ModelRegistrator {
@@ -46,6 +46,7 @@ export class ModelRegistrator {
       UserRole,
       UserToUserRoleLink,              
       UserToCampaignInvite,
+      StatModifier,
     }
   }
 

@@ -13,8 +13,9 @@ object CharacterToGiftGenericGenericLinkFactory {
             it.rightModelType = Gift::class.simpleName
             it.rightModelId = params.gift?.id
             it.leftModelType = GameCharacter::class.simpleName
+            it.category = GenericGenericLink.Categories.CharacterToGiftLink.CHARACTER_TO_GIFT.toString()
             it.gift = params.gift?.let {
-                GiftCreateFactory.create(it)
+                GiftCreateFactory.whenGameCharacterForPlayerAsPrimaryPlayerCreate(it)
             }
         }
     }

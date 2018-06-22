@@ -12,8 +12,9 @@ object GameCharacterToWordGenericGenericLinkCreateFactory {
             it.rightModelId = params.word?.id
             it.rightModelType = Word::class.simpleName
             it.leftModelType = GameCharacter::class.simpleName
+            it.category = GenericGenericLink.Categories.CharacterToWordLink.CHARACTER_TO_WORD.toString()
             it.word = params.word?.let {
-                WordCreateFactory.create(it)
+                WordCreateFactory.whenGameCharacterForPlayerAsPrimaryCharacterCreate(it)
             }
         }
     }

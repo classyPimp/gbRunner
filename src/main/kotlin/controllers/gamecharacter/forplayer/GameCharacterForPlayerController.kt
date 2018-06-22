@@ -36,6 +36,7 @@ class GameCharacterForPlayerController(context: ServletRequestContext) : Applica
         )
 
         composer.onError = {
+            println(GameCharacterForPlayerCreateToJsonSerializer.onError(it))
             renderJson(
                     GameCharacterForPlayerCreateToJsonSerializer.onError(it)
             )

@@ -1,6 +1,5 @@
 package models.gamecharacter
 
-import models.genericgenericlink.GenericGenericLink
 import models.genericgenericlink.GenericGenericLinkValidator
 import models.gift.Gift
 import models.gift.GiftRules
@@ -17,7 +16,9 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     fun createForPlayerAsPrimaryPlayerCharacterScenario() {
         validateGenericGenericLink()
         validateLinksToGifts()
+        validateThatThereAreNoDuplicateGifts()
         validateLinksToWords()
+        validateThatThereAreNoDuplicateWords()
         validateAmountOfWords()
         validatePointsSpentOnGifts()
         validateName()
@@ -54,6 +55,17 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
         }
     }
 
+    private fun validateThatThereAreNoDuplicateGifts() {
+        val links = model.linksToGifts
+        if (links == null) {
+            return
+        }
+        val duplicates = links.map {it.gift!!.name!!}.groupingBy { it }.eachCount().filter { it.value > 1 }
+        if (duplicates.keys.isNotEmpty()) {
+            validationManager.addGeneralError("duplicate gifts selected: ${duplicates.keys.joinToString { "${it}, " }}")
+        }
+    }
+
     private fun validateLinksToWords() {
         val links = model.linksToWords
         if (links == null) {
@@ -69,6 +81,17 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
         }
     }
 
+    private fun validateThatThereAreNoDuplicateWords() {
+        val words = model.linksToWords
+        if (words == null) {
+            return
+        }
+        val duplicates = words.map {it.word!!.name!!}.groupingBy { it }.eachCount().filter { it.value > 1 }
+        if (duplicates.keys.isNotEmpty()) {
+            validationManager.addGeneralError("duplicate words selected: ${duplicates.keys.joinToString { "${it}, " }}")
+        }
+    }
+
     private fun validateAmountOfWords() {
         val links = model.linksToWords
         val maxWordsSize = WordRules.availableWordsNumberAtCharacterCreation
@@ -78,10 +101,10 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
         }
         if (maxWordsSize != links.size) {
             if (maxWordsSize < links.size) {
-                validationManager.addGeneralError("you can add only ${maxWordsSize} words")
+                validationManager.addGeneralError("you can add only ${links.size - maxWordsSize} words")
             }
             if (maxWordsSize > links.size) {
-                validationManager.addGeneralError("you should add ${maxWordsSize} more words")
+                validationManager.addGeneralError("you should add ${maxWordsSize - links.size} more words")
             }
         }
 
@@ -98,8 +121,10 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             it.gift?.let {
                 if (it.category == Gift.Categories.GREATER_GIFT.toString()) {
                     maxPoints -= GiftRules.costOfGreaterGift
-                } else {
+                } else if (it.category == Gift.Categories.LESSER_GIFT.toString()) {
                     maxPoints -= GiftRules.costOfLesserGift
+                } else {
+                    throw IllegalStateException()
                 }
             }
         }
@@ -124,7 +149,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateStrengthOnCreate() {
         val strength = model.strength
         if (strength == null) {
-            throw IllegalStateException()
+            validationManager.addStrengthError("should be set")
+            return
         }
         if (strength > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
@@ -134,7 +160,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateDexterityOnCreate() {
         val dexterity = model.dexterity
         if (dexterity == null) {
-            throw IllegalStateException()
+            validationManager.addDexterityError("should be set")
+            return
         }
         if (dexterity > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
@@ -144,7 +171,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateConstitutionOnCreate() {
         val Constitution = model.constitution
         if (Constitution == null) {
-            throw IllegalStateException()
+            validationManager.addConstitutionError("should be set")
+            return
         }
         if (Constitution > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
@@ -154,7 +182,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateWisdomOnCreate() {
         val wisdom = model.wisdom
         if (wisdom == null) {
-            throw IllegalStateException()
+            validationManager.addWisdomError("should be set")
+            return
         }
         if (wisdom > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
@@ -164,7 +193,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateIntelligenceOnCreate() {
         val intelligence = model.intelligence
         if (intelligence == null) {
-            throw IllegalStateException()
+            validationManager.addIntelligenceError("should be set")
+            return
         }
         if (intelligence > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
@@ -174,7 +204,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
     private fun validateCharismaOnCreate() {
         val charisma = model.charisma
         if (charisma == null) {
-            throw IllegalStateException()
+            validationManager.addCharismaError("should be set")
+            return
         }
         if (charisma > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
             validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")

@@ -84,8 +84,19 @@ object PredefinedWordManager {
             absentWords.forEach {
                 predefinedWordsByNameMap.get(it).also {
                     it!!.record.save(tx.inTransactionDsl)
-                    ensurePredefinedGiftsArePersisted(it.id!!, it.gifts!!, tx.inTransactionDsl)
                 }
+            }
+        }
+
+        existingWords.forEach {
+            val predefinedWord = predefinedWordsByNameMap[it.name!!]
+            predefinedWord!!.id = it.id!!
+        }
+
+        TransactionRunner.run {
+            val tx = it.inTransactionDsl
+            predefinedWords.forEach {
+                ensurePredefinedGiftsArePersisted(it.id!!, it.gifts!!, tx)
             }
         }
     }

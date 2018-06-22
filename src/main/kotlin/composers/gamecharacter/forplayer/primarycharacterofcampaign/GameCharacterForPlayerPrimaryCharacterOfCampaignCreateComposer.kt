@@ -5,6 +5,7 @@ import models.gamecharacter.GameCharacter
 import models.gamecharacter.GameCharacterRequestParametersWrapper
 import models.gamecharacter.GameCharacterValidator
 import models.gamecharacter.factories.forplayer.GameCharacterForPlayerCreateFactory
+import models.gamecharacter.tojsonserializers.forplayer.GameCharacterForPlayerCreateToJsonSerializer
 import orm.services.ModelInvalidError
 import orm.utils.TransactionRunner
 import utils.composer.composerexceptions.InvalidRequestParametersError

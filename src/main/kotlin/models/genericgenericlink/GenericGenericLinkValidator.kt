@@ -67,7 +67,7 @@ class GenericGenericLinkValidator(model: GenericGenericLink) : GenericGenericLin
     }
 
     private fun validateGameCharacterId() {
-        if (model.rightModelType != GameCharacter::class.simpleName) {
+        if (model.leftModelType != GameCharacter::class.simpleName) {
             throw IllegalStateException()
         }
     }
