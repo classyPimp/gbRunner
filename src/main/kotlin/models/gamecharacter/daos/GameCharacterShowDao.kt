@@ -40,5 +40,11 @@ object GameCharacterShowDao {
                 .executeGetFirstOrNull()
     }
 
+    fun finByIdNotPreloadingAnything(gameCharacterId: Long): GameCharacter? {
+        return GameCharacterRecord.GET()
+                .where(GAME_CHARACTERS.ID.eq(gameCharacterId))
+                .executeGetFirstOrNull()
+    }
+
 
 }

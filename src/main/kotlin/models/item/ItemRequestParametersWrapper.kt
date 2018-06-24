@@ -6,6 +6,7 @@ import java.sql.Timestamp
 
 import models.itemblueprint.ItemBlueprintRequestParametersWrapper
 import models.gamecharacter.GameCharacterRequestParametersWrapper
+import models.statmodifier.StatModifierRequestParametersWrapper
 
 class ItemRequestParametersWrapper(val requestParameters: IParam) {
 
@@ -16,25 +17,22 @@ class ItemRequestParametersWrapper(val requestParameters: IParam) {
     val subcategory: String? by lazy { requestParameters.get("subcategory")?.string }
     val name: String? by lazy { requestParameters.get("name")?.string }
     val description: String? by lazy { requestParameters.get("description")?.string }
-    val baseAc: Int? by lazy { requestParameters.get("baseAc")?.int }
-    val diceCount: Int? by lazy { requestParameters.get("diceCount")?.int }
-    val diceValue: Int? by lazy { requestParameters.get("diceValue")?.int }
-    val dependsOnAttribute: String? by lazy { requestParameters.get("dependsOnAttribute")?.string }
+    val blueprintId: Long? by lazy { requestParameters.get("blueprintId")?.long }
+    val isBlueprint: Boolean? by lazy { requestParameters.get("isBlueprint")?.boolean }
+    val isAbility: Boolean? by lazy { requestParameters.get("isAbility")?.boolean }
     val ownerId: Long? by lazy { requestParameters.get("ownerId")?.long }
     val isEquipped: Boolean? by lazy { requestParameters.get("isEquipped")?.boolean }
     val isInInventory: Boolean? by lazy { requestParameters.get("isInInventory")?.boolean }
-    val itemBlueprintId: Long? by lazy { requestParameters.get("itemBlueprintId")?.long }
     val campaignId: Long? by lazy { requestParameters.get("campaignId")?.long }
-    val blueprint: ItemBlueprintRequestParametersWrapper? by lazy {
-        requestParameters.get("blueprint")?.let {
-            ItemBlueprintRequestParametersWrapper(it)
-        }
-    }
     val gameCharacter: GameCharacterRequestParametersWrapper? by lazy {
         requestParameters.get("gameCharacter")?.let {
             GameCharacterRequestParametersWrapper(it)
         }
     }
-
+    val statModifiers: MutableList<StatModifierRequestParametersWrapper>? by lazy {
+        requestParameters.get("statModifier")?.paramList()?.mapTo(mutableListOf<StatModifierRequestParametersWrapper>()) {
+            StatModifierRequestParametersWrapper(it)
+        }
+    }
 
 }

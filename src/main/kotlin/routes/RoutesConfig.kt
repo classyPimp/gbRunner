@@ -5,6 +5,8 @@ import controllers.campaign.forgamemaster.CampaignForGameMasterController
 import controllers.campaign.forplayer.CampaignForPlayerController
 import controllers.gamecharacter.forplayer.primarycharacterofcampaign.GameCharacterForPlayerPrimaryCharacterOfCampaignController
 import controllers.gift.GiftController
+import controllers.item.asblueprint.foradmin.ItemAsBlueprintForAdminController
+import controllers.item.foradmin.ItemForAdminController
 import controllers.session.SessionController
 import controllers.user.UserController
 import controllers.user.UserRegistrationController
@@ -141,6 +143,24 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                 }
                 get("/:invitationToken") {
                     UserToCampaignInviteController(it).show()
+                }
+            }
+
+            namespace("/item") {
+                namespace("/for-admin") {
+                    get("") {
+                        ItemForAdminController(it).index()
+                    }
+                    post("") {
+                        ItemForAdminController(it).create()
+                    }
+                }
+                namespace("/as-blueprint") {
+                    namespace("/for-admin") {
+                        get("") {
+                            ItemAsBlueprintForAdminController(it).index()
+                        }
+                    }
                 }
             }
 

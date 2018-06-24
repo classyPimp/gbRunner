@@ -1,6 +1,7 @@
 package models.genericgenericlink.daos
 
 import models.campaign.Campaign
+import models.gamecharacter.GameCharacter
 import org.jooq.generated.tables.GenericGenericLinks
 import orm.genericgenericlinkgeneratedrepository.GenericGenericLinkRecord
 import models.genericgenericlink.GenericGenericLink
@@ -45,6 +46,19 @@ object GenericGenericLinkShowDao {
                                 table.CATEGORY.eq(GenericGenericLink.Categories.UserToCampaignLink.PLAYER.toString())
                         )
                 ).executeGetFirstOrNull()
+
+        return link != null
+    }
+
+    fun userToGameCharacterAsPrimaryCharacterExistsFor(userId: Long, gameCharacterId: Long): Boolean {
+        val link = GenericGenericLinkRecord.GET()
+                .where(
+                        table.RIGHT_MODEL_ID.eq(userId)
+                                .and(
+                                        table.CATEGORY.eq(GenericGenericLink.Categories.UserToCharacterLink.PRIMARY_PLAYER_CHARACTER.toString())
+                                )
+                )
+                .executeGetFirstOrNull()
 
         return link != null
     }

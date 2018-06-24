@@ -4,12 +4,39 @@ import org.jooq.generated.tables.Items
 import orm.annotations.*
 import orm.itemgeneratedrepository.ItemRecord
 import java.sql.Timestamp
-import models.itemblueprint.ItemBlueprint
 import models.gamecharacter.GameCharacter
 import models.statmodifier.StatModifier
 
 @IsModel(jooqTable = Items::class)
 class Item {
+
+    enum class Categories {
+        WEAPON,
+        ARMOR,
+        ABILITY,
+    }
+
+    enum class WeaponSubCategories {
+        UNARMED,
+        LIGHT,
+        MEDIUM,
+        HEAVY,
+        ONE_HAND_RANGED,
+        TWO_HAND_RANGED
+    }
+
+    enum class ArmorSubCategories {
+        NONE,
+        LIGHT,
+        MEDIUM,
+        HEAVY,
+        SHIELD,
+    }
+
+    enum class AbilitySubCategories {
+        SPENDS_EFFORT_ON_TOGGLE,
+        CONSTANT,
+    }
 
     val record: ItemRecord by lazy { ItemRecord(this) }
 
@@ -35,41 +62,38 @@ class Item {
     @TableField(name = "DESCRIPTION")
     var description: String? = null
 
-    @TableField(name = "BASE_AC")
-    var baseAc: Int? = null
-
-    @TableField(name = "DICE_COUNT")
-    var diceCount: Int? = null
-
-    @TableField(name = "DICE_VALUE")
-    var diceValue: Int? = null
-
-    @TableField(name = "DEPENDS_ON_ATTRIBUTE")
-    var dependsOnAttribute: String? = null
-
     @TableField(name = "OWNER_ID")
     var ownerId: Long? = null
 
     @TableField(name = "IS_EQUIPPED")
     var isEquipped: Boolean? = null
 
+    @TableField(name = "IS_BLUEPRINT")
+    var isBlueprint: Boolean? = null
+
     @TableField(name = "IS_IN_INVENTORY")
     var isInInventory: Boolean? = null
 
-    @TableField(name = "ITEM_BLUEPRINT_ID")
-    var itemBlueprintId: Long? = null
+    @TableField(name = "IS_ABILITY")
+    var isAbility: Boolean? = null
+
+    @TableField(name = "BLUEPRINT_ID")
+    var bluePrintId: Long? = null
 
     @TableField(name = "CAMPAIGN_ID")
     var campaignId: Long? = null
-
-    @BelongsTo(model = ItemBlueprint::class, fieldOnThis = "ITEM_BLUEPRINT_ID", fieldOnThat = "ID")
-    var blueprint: ItemBlueprint? = null
 
     @BelongsTo(model = GameCharacter::class, fieldOnThis = "OWNER_ID", fieldOnThat = "ID")
     var gameCharacter: GameCharacter? = null
 
     @HasMany(model = StatModifier::class, fieldOnThis = "ID", fieldOnThat = "ITEM_ID")
     var statModifiers: MutableList<StatModifier>? = null
+
+    @BelongsTo(model = Item::class, fieldOnThat = "ID", fieldOnThis = "BLUEPRINT_ID")
+    var blueprint: Item? = null
+
+    @HasMany(model = Item::class, fieldOnThis = "ID", fieldOnThat = "BLUEPRINT_ID")
+    var itemsOfThisBlueprint: MutableList<Item>? = null
 
 }
 

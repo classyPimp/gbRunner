@@ -152,8 +152,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addStrengthError("should be set")
             return
         }
-        if (strength > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (strength > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 
@@ -163,8 +163,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addDexterityError("should be set")
             return
         }
-        if (dexterity > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (dexterity > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 
@@ -174,8 +174,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addConstitutionError("should be set")
             return
         }
-        if (Constitution > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (Constitution > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 
@@ -185,8 +185,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addWisdomError("should be set")
             return
         }
-        if (wisdom > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (wisdom > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 
@@ -196,8 +196,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addIntelligenceError("should be set")
             return
         }
-        if (intelligence > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (intelligence > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 
@@ -207,8 +207,8 @@ class GameCharacterValidator(model: GameCharacter) : GameCharacterValidatorTrait
             validationManager.addCharismaError("should be set")
             return
         }
-        if (charisma > GameCharacterRules.maxAttributeValueAtCharacterCreation) {
-            validationManager.addStrengthError("max value ${GameCharacterRules.maxAttributeValueAtCharacterCreation}")
+        if (charisma > GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION) {
+            validationManager.addStrengthError("max value ${GameCharacterRules.MAX_ATTRIBUTE_VALUE_AT_CHARACTER_CREATION}")
         }
     }
 

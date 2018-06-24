@@ -10,6 +10,34 @@ import models.item.Item
 @IsModel(jooqTable = StatModifiers::class)
 class StatModifier {
 
+    enum class Categories {
+        ATTACK,
+        ARMOR,
+        SAVING_THROW_PENALTY,
+    }
+
+    enum class AttackSubCategories {
+        PER_DICE_DAMAGE,
+        ATTACK_DICE_COUNT,
+        OVERRIDDEN_ATTACK_DICE_COUNT,
+        OVERRIDDEN_PER_DICE_DAMAGE,
+        ATTACK_BONUS,
+        ADD_TO_RESULT_MODIFIER_OF_WHICH_BETTER_STRENGTH_OR_DEXTERITY,
+        ADD_TO_RESULT_MODIFIER_OF_STRENGTH,
+        ADD_TO_RESULT_MODIFIER_OF_DEXTERITY,
+    }
+
+    enum class ArmorSubCategories {
+        BASE_AC,
+        AC_BONUS_OR_PENALTY
+    }
+
+    enum class SavingThrowPenaltySubCategories {
+        HARDINESS_SAVING_THROW_PENALTY,
+        EVASION_SAVING_THROW_PENALTY,
+        SPIRIT_SAVING_THROW_PENALTY,
+    }
+
     val record: StatModifierRecord by lazy { StatModifierRecord(this) }
 
     @TableField(name = "ID")
@@ -41,7 +69,7 @@ class StatModifier {
     var value: Int? = null
 
     @TableField(name = "NON_STANDARD_VALUE")
-    var nonStandartValue: String? = null
+    var nonStandardValue: String? = null
 
     @BelongsTo(model = GameCharacter::class, fieldOnThis = "GAME_CHARACTER_ID", fieldOnThat = "ID")
     var gameCharacter: GameCharacter? = null

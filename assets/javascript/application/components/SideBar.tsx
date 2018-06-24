@@ -23,6 +23,13 @@ export class SideBar extends BaseReactComponent {
                         </Link>
                     </li>
                 }
+                {CurrentUser.instance.hasRole("SUPER_USER") &&
+                    <li className="pure-menu-item">
+                        <Link to="/item/management" className="pure-menu-link">
+                            item management
+                        </Link>
+                    </li>
+                }
                 <li className="pure-menu-item">
                     <Link to="/campaign/for-game-master" className="pure-menu-link">
                         campaigns where I'm gm

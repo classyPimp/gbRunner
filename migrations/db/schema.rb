@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180622065117) do
+ActiveRecord::Schema.define(version: 20180624085442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,14 +22,6 @@ ActiveRecord::Schema.define(version: 20180622065117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
-  end
-
-  create_table "avatars", force: :cascade do |t|
-    t.string "file_name"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_avatars_on_user_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -152,6 +144,18 @@ ActiveRecord::Schema.define(version: 20180622065117) do
     t.index ["right_model_type", "right_model_id"], name: "g_g_l_r_m"
   end
 
+  create_table "generic_model_properties", force: :cascade do |t|
+    t.string "model_type"
+    t.bigint "model_id"
+    t.string "value"
+    t.string "name"
+    t.string "category"
+    t.string "sub_category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["model_type", "model_id"], name: "index_generic_model_properties_on_model_type_and_model_id"
+  end
+
   create_table "gifts", force: :cascade do |t|
     t.bigint "word_id"
     t.string "name"
@@ -194,17 +198,17 @@ ActiveRecord::Schema.define(version: 20180622065117) do
     t.string "sub_category"
     t.string "name"
     t.string "description"
-    t.integer "base_ac"
-    t.integer "dice_count"
-    t.integer "dice_value"
-    t.string "depends_on_attribute"
     t.bigint "owner_id"
     t.boolean "is_equipped"
     t.boolean "is_in_inventory"
     t.bigint "item_blueprint_id"
     t.bigint "campaign_id"
+    t.boolean "is_blueprint"
+    t.bigint "blueprint_id"
+    t.boolean "is_ability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["blueprint_id"], name: "index_items_on_blueprint_id"
     t.index ["campaign_id"], name: "index_items_on_campaign_id"
     t.index ["item_blueprint_id"], name: "index_items_on_item_blueprint_id"
     t.index ["owner_id"], name: "index_items_on_owner_id"
@@ -283,7 +287,6 @@ ActiveRecord::Schema.define(version: 20180622065117) do
   end
 
   add_foreign_key "accounts", "users"
-  add_foreign_key "avatars", "users"
   add_foreign_key "dominion_expenditures", "game_characters"
   add_foreign_key "effort_expenditures", "game_characters"
   add_foreign_key "game_characters", "campaigns"

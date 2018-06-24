@@ -6,8 +6,8 @@ import { UserComponents } from "./user/UserComponents";
 import { NotFound } from "./shared/NotFound";
 import { History } from "history";
 import { CampaignComponents } from './campaign/CampaignComponents';
-import { Main } from './campaign/forgamemaster/Main';
 import { UserToCampaignInviteComponents } from './usertocampaigninvite/UserToCampaignInvitateComponents'
+import { ItemComponents } from './item/ItemComponents';
 
 
 export class MainWithSidebarComponent extends BaseReactComponent {
@@ -29,6 +29,7 @@ export class MainWithSidebarComponent extends BaseReactComponent {
                 <Route path="/campaign/for-game-master" component={CampaignComponents.forGameMaster.Main}/>
                 <Route path="/campaign/for-player" component={CampaignComponents.forPlayer.Main}/>
                 <Route path="/user-to-campaign-invite/:invitationToken" component={UserToCampaignInviteComponents.Show}/>
+                <Route path="/item/manage" component={ItemComponents.forAdmin.Main}/>
                 <Route render={() => {console.log(`redirecting to 404 from ${this.props.history.location.pathname}`);return <Redirect to="/404"/>}}/>
               </Switch>
             </div>

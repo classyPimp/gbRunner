@@ -22,7 +22,7 @@ class StatModifierRequestParametersWrapper(val requestParameters: IParam) {
     val itemId: Long? by lazy { requestParameters.get("itemId")?.long }
     val isBlueprint: Boolean? by lazy { requestParameters.get("isBlueprint")?.boolean }
     val value: Int? by lazy { requestParameters.get("value")?.int }
-    val nonStandartValue: String? by lazy { requestParameters.get("nonStandartValue")?.string }
+    val nonStandartValue: String? by lazy { requestParameters.get("nonStandardValue")?.string }
     val gameCharacter: GameCharacterRequestParametersWrapper? by lazy {
         requestParameters.get("gameCharacter")?.let {
             GameCharacterRequestParametersWrapper(it)
