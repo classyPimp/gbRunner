@@ -48,4 +48,35 @@ export class StatModifier extends BaseModel {
     @HasOne("Item")
     item: Item
 
+    @Route("GET", {url: "/api/stat-modifier/category/form-feed"})
+    static categoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<StatModifier>>
+
+    static afterCategoryFormFeedIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
+
+    @Route("GET", {url: "/api/stat-modifier/category/form-feed/attack-subcategory"})
+    static categoryAsAttackSubcategoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<StatModifier>>
+
+    static afterCategoryAsAttackSubcategoryFormFeedIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
+
+    @Route("GET", {url: "/api/stat-modifier/category/form-feed/attack-subcategory"})
+    static categoryAsArmorSubcategoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<StatModifier>>
+
+    static afterCategoryAsArmorSubcategoryFormFeedIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }  
+
+    @Route("GET", {url: "/api/stat-modifier/category/form-feed/saving-throw-penalty-subcategory"})
+    static categoryAsSavingThrowPenaltySubcategoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<StatModifier>>
+
+    static afterCategoryAsSavingThrowPenaltySubcategoryFormFeedIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }  
+
+
+
+
 }

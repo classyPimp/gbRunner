@@ -45,7 +45,31 @@ export class Show extends BaseReactComponent {
           {gameCharacter &&
             <div>
               <p>
-                {gameCharacter.name}
+                name: {gameCharacter.name}
+              </p>
+              <p>
+                level: {gameCharacter.level}
+              </p>
+              <p> 
+                biography: {gameCharacter.description}
+              </p>
+              <p>
+                strength: {gameCharacter.strength}
+              </p>
+              <p>
+                dexterity: {gameCharacter.dexterity}
+              </p>
+              <p>
+                constitution: {gameCharacter.constitution}
+              </p>
+              <p>
+                wisdom: {gameCharacter.wisdom}
+              </p>
+              <p>
+                intelligence: {gameCharacter.intelligence}
+              </p>
+              <p>
+                charisma: {gameCharacter.charisma}
               </p>
             </div>
           }

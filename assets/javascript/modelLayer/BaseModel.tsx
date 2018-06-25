@@ -16,7 +16,9 @@ export class BaseModel extends MixinSerializableTrait(MixinValidatableTrait(Mode
     constructor(properties?: IModelProperties){
         super(properties)
         this.init()
-    }  
+    }
+
+    reactKey: number  
 
     static className = "NOT_SET"
 

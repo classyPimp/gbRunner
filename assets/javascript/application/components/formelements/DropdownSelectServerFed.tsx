@@ -21,6 +21,8 @@ export class DropDownSelectServerFed extends BaseReactComponent<IFormElementProp
         queryingFunction: ()=>Promise<ModelCollection<BaseModel>>,
         preselected?: any,
         ref?: (arg: any)=> void,
+        onSelect?: (value: any)=>any,
+        onCancelSelect?: ()=>any
         optional?: {
             placeholder?: string
             [id:string]:any
@@ -60,6 +62,7 @@ export class DropDownSelectServerFed extends BaseReactComponent<IFormElementProp
     prepareOptions(modelsToWrapAsOptions: ModelCollection<BaseModel>) {
       let options = modelsToWrapAsOptions.array.map((it)=>{
         if (this.props.preselected) {
+          console.log(this.props.preselected + "===" + it.properties[this.props.propertyToSelect])
           if (this.props.preselected === it.properties[this.props.propertyToSelect]) {
             let preselected = new BaseModelSelectChoiseWrapper(it, this.props.propertyToShow, this.props.propertyToSelect, true)
             this.state.currentlySelected = preselected
@@ -138,6 +141,8 @@ export class DropDownSelectServerFed extends BaseReactComponent<IFormElementProp
     @autobind
     cancelSelected(){
       this.clearInputs()
+      this.props.onCancelSelect
+        && this.props.onCancelSelect()
     }
 
     @autobind
@@ -167,6 +172,9 @@ export class DropDownSelectServerFed extends BaseReactComponent<IFormElementProp
       }
       selectOption.select()
       this.setState({currentlySelected: selectOption})
+      if (this.props.onSelect) {
+        this.props.onSelect(selectOption.getSelectedValue())
+      }
     }
 
     @autobind

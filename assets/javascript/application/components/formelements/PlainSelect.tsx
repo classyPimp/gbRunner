@@ -16,7 +16,7 @@ export class PlainSelect extends BaseReactComponent<IFormElementProps> implement
     propertyName: string,
     registerInput: (element: IFormElement) => void
     options: {[id: string]: any}
-    preselected?: {[id: string]: any}
+    preselected?: any
     optional?: {
       placeholder?: string
       [id: string]: any
@@ -41,15 +41,11 @@ export class PlainSelect extends BaseReactComponent<IFormElementProps> implement
 
     let preselected = this.props.preselected
 
-    let preselectedKey: string = undefined
-    if (preselected) {
-      preselectedKey = Object.keys(preselected)[0]
-    }
-
+   
     for (let key of Object.keys(propsOptions)) {
       let value = propsOptions[key]
-      if (preselected) {
-         if (preselectedKey === key && preselected[preselectedKey] === value) {
+      if (preselected !== undefined) {
+         if (preselected === value) {
            let preselectedChoice = new SelectChoiceWrapper(value, key)
            preselectedChoice.select()
            this.state.currentlySelected = preselectedChoice
@@ -57,7 +53,7 @@ export class PlainSelect extends BaseReactComponent<IFormElementProps> implement
       }    
       options.push(new SelectChoiceWrapper(value, key))
     }
-
+    
     let allOptions = options.slice(0)
     this.state.options = options
     this.state.allOptions = allOptions

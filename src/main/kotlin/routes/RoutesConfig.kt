@@ -6,13 +6,16 @@ import controllers.campaign.forplayer.CampaignForPlayerController
 import controllers.gamecharacter.forplayer.primarycharacterofcampaign.GameCharacterForPlayerPrimaryCharacterOfCampaignController
 import controllers.gift.GiftController
 import controllers.item.asblueprint.foradmin.ItemAsBlueprintForAdminController
+import controllers.item.category.forformfeed.ItemCategoryFormFeedController
 import controllers.item.foradmin.ItemForAdminController
 import controllers.session.SessionController
+import controllers.statmodifier.category.formfeed.StatModifierCategoryFormFeedController
 import controllers.user.UserController
 import controllers.user.UserRegistrationController
 import controllers.user.management.UserManagementController
 import controllers.usertocampaigninvite.UserToCampaignInviteController
 import controllers.word.WordController
+import models.statmodifier.StatModifier
 import router.RoutesDrawer
 import router.src.Router
 import servletUtils.SimpleFileServer
@@ -146,7 +149,39 @@ class RoutesConfig(override val router: Router): RoutesDrawer(router) {
                 }
             }
 
+            namespace("/stat-modifier") {
+                namespace("/category") {
+                    namespace("/form-feed") {
+                        get("") {
+                            StatModifierCategoryFormFeedController(it).index()
+                        }
+                        get("/attack-subcategory") {
+                            StatModifierCategoryFormFeedController(it).indexAttackSubcategories()
+                        }
+                        get("/armor-subcategory") {
+                            StatModifierCategoryFormFeedController(it).indexArmorSubcategories()
+                        }
+                        get("/saving-throw-penalty-subcategory") {
+                            StatModifierCategoryFormFeedController(it).savingThrowPenaltySubCategories()
+                        }
+                    }
+                }
+            }
+
             namespace("/item") {
+                namespace("/category") {
+                    namespace("/form-feed") {
+                        get("") {
+                            ItemCategoryFormFeedController(it).indexCategories()
+                        }
+                        get("/armor-subcategory") {
+                            ItemCategoryFormFeedController(it).indexArmorSubCategories()
+                        }
+                        get("/weapon-subcategory") {
+                            ItemCategoryFormFeedController(it).indexWeaponSubCategories()
+                        }
+                    }
+                }
                 namespace("/for-admin") {
                     get("") {
                         ItemForAdminController(it).index()

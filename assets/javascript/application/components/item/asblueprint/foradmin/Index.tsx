@@ -11,6 +11,10 @@ export class Index extends BaseReactComponent {
         items: new ModelCollection<Item>()
     }
 
+    props: {
+      onSelect?: (item: Item) => any
+    }
+
     componentDidMount() {
         Item.asBluePrintForAdminIndex().then((items)=>{
             this.setState({items})
@@ -20,7 +24,7 @@ export class Index extends BaseReactComponent {
     render(){
         return <div>
             {this.state.items.map((item)=>{
-                return <div>
+                return <div key={item.id}>
                     <p>
                         {item.name}
                     </p>
@@ -37,7 +41,7 @@ export class Index extends BaseReactComponent {
                         stat modifiers:
                     </p>
                     {item.statModifiers.map((statModifier)=>{
-                        return <div>
+                        return <div key={statModifier.id}>
                             <p>
                                 {statModifier.category}
                             </p>
@@ -49,6 +53,11 @@ export class Index extends BaseReactComponent {
                             </p>
                         </div>
                     })}
+                    {this.props.onSelect && 
+                      <button onClick={()=>{this.props.onSelect(item)}}>
+                        select
+                      </button>                      
+                    }
                 </div>
             })}
         </div>

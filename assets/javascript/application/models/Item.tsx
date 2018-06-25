@@ -53,6 +53,9 @@ export class Item extends BaseModel {
     
     @Property
     campaignId: number
+
+    @Property
+    isAbility: boolean
     
     @HasOne("GameCharacter")
     gameCharacter: GameCharacter
@@ -63,21 +66,21 @@ export class Item extends BaseModel {
     @HasOne("Item")
     blueprint: Item
 
-    @Route("GET", {url: "/api/as-blueprint/for-admin"})
+    @Route("GET", {url: "/api/item/as-blueprint/for-admin"})
     static asBluePrintForAdminIndex: (options?: RequestOptions) => Promise<ModelCollection<Item>>
 
     static afterAsBluePrintForAdminIndexRequest(options: RequestOptions) {
         this.afterIndexRequest(options)
     }
 
-    @Route("GET", {url: "/api/for-admin"})
+    @Route("GET", {url: "/api/item/for-admin"})
     static forAdminIndex: (options?: RequestOptions) => Promise<ModelCollection<Item>>
 
     static afterForAdminIndexRequest(options: RequestOptions) {
         this.afterIndexRequest(options)
     }
 
-    @Route("POST", {url: "/api/for-admin"})
+    @Route("POST", {url: "/api/item/for-admin"})
     forAdminCreate: (options?: RequestOptions) => Promise<Item>
 
     beforeForAdminCreateRequest(options: RequestOptions) {
@@ -86,6 +89,28 @@ export class Item extends BaseModel {
 
     afterForAdminCreateRequest(options: RequestOptions) {
         this.afterCreateRequest(options)
+    }
+
+    @Route("GET", {url: "/api/item/category/form-feed"})
+    static categoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<Item>>
+
+    static afterCategoryFormFeedIndexRequest(options: RequestOptions) {
+      console.log("afterIndexRequest")
+      this.afterIndexRequest(options)
+    }
+
+    @Route("GET", {url: "/api/item/category/form-feed/armor-subcategory"})
+    static categoryFormFeedArmorSubCategoryIndex: (options?: RequestOptions) => Promise<ModelCollection<Item>>
+
+    static afterCategoryFormFeedArmorSubCategoryIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
+    }
+
+    @Route("GET", {url: "/api/item/category/form-feed/weapon-subcategory"})
+    static categoryFormFeedWeaponSubcategoryIndex: (options?: RequestOptions) => Promise<ModelCollection<Item>>
+
+    static afterCategoryFormFeedWeaponSubcategoryIndexRequest(options: RequestOptions) {
+      this.afterIndexRequest(options)
     }
 
 }

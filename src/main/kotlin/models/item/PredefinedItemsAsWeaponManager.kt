@@ -1,8 +1,36 @@
 package models.item
 
 import models.statmodifier.StatModifier
+import org.jooq.generated.Tables
+import orm.itemgeneratedrepository.ItemRecord
+import orm.utils.TransactionRunner
 
 object PredefinedItemsAsWeaponManager {
+
+    fun ensurePredefinedItemsAsWeaponArePersisted() {
+        val predefinedWeaponsByNameMap = mutableMapOf<String, Item>()
+        predefinedWeapons.forEach {
+            predefinedWeaponsByNameMap[it.name!!] = it
+        }
+
+        val existinsWeapons = ItemRecord.GET()
+                .where(
+                        Tables.ITEMS.NAME.`in`(
+                                predefinedWeaponsByNameMap.keys
+                        )
+                ).execute()
+
+        val absentWeapons = predefinedWeaponsByNameMap.keys - existinsWeapons.map { it.name!! }
+
+        TransactionRunner.run {
+            val tx = it.inTransactionDsl
+            absentWeapons.forEach {
+                predefinedWeaponsByNameMap[it]!!.also {
+                    it.record.saveCascade(tx)
+                }
+            }
+        }
+    }
 
     val predefinedWeapons = mutableListOf<Item>(
             Item().also {

@@ -28,7 +28,7 @@ export class ApplicationComponent extends BaseReactComponent {
     @autobind
     xhrOnFailHandler(xhr: XMLHttpRequest) {
         if (xhr.status === 404) {
-            this.props.history.push("/404", {})
+            this.props.history.replace("/404", {})
         }
     }
 

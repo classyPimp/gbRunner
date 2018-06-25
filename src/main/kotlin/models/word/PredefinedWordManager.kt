@@ -1,7 +1,6 @@
-package models.word.tojsonserializers
+package models.word
 
 import models.gift.Gift
-import models.word.Word
 import org.jooq.DSLContext
 import org.jooq.generated.Tables.GIFTS
 import org.jooq.generated.Tables.WORDS

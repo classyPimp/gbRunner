@@ -3,9 +3,11 @@ import orm.dependencymanagement.OrmDependenciesManager
 import router.src.Router
 import dependencymanagement.MicroFrameworkDependencyManager
 import hilfhund.routes.HilfHundRoutesAdder
+import models.item.PredefinedItemAsArmorManager
+import models.item.PredefinedItemsAsWeaponManager
 import models.user.services.SuperUserManager
 import models.userrole.PredefinedUserRoleManager
-import models.word.tojsonserializers.PredefinedWordManager
+import models.word.PredefinedWordManager
 
 
 /**
@@ -20,6 +22,8 @@ class RunOnApplicationBootstrap: Runnable {
         ensurePredefinedRolesArePersistedInDb()
         ensureSuperUserIsPersistedInDb()
         ensurePredefinedWordsAndGiftsArePersisted()
+        PredefinedItemAsArmorManager.ensurePredefinedItemsAsArmorArePersisted()
+        PredefinedItemsAsWeaponManager.ensurePredefinedItemsAsWeaponArePersisted()
     }
 
     private fun initializeApplicationComponent() {

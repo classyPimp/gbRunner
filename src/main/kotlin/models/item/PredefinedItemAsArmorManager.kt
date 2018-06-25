@@ -1,8 +1,37 @@
 package models.item
 
 import models.statmodifier.StatModifier
+import org.jooq.generated.Tables.ITEMS
+import orm.itemgeneratedrepository.ItemRecord
+import orm.utils.TransactionRunner
 
 object PredefinedItemAsArmorManager {
+
+    fun ensurePredefinedItemsAsArmorArePersisted() {
+        val predefinedArmorsByNameMap = mutableMapOf<String, Item>()
+        predefinedArmors.forEach {
+            predefinedArmorsByNameMap[it.name!!] = it
+        }
+
+        val existingArmors = ItemRecord.GET()
+                .where(
+                        ITEMS.NAME.`in`(
+                                predefinedArmorsByNameMap.keys
+                        )
+                ).execute()
+
+        val absentArmors = predefinedArmorsByNameMap.keys - existingArmors.map { it.name!! }
+
+        TransactionRunner.run {
+            val tx = it.inTransactionDsl
+            absentArmors.forEach {
+                predefinedArmorsByNameMap[it]!!.also {
+                    it.record.saveCascade(tx)
+                }
+            }
+        }
+
+    }
 
     val predefinedArmors = mutableListOf<Item>(
             Item().also {
@@ -13,7 +42,8 @@ object PredefinedItemAsArmorManager {
                 it.isAbility = false
                 it.statModifiers = mutableListOf(
                         StatModifier().also {
-                            it.category = StatModifier.ArmorSubCategories.BASE_AC.toString()
+                            it.category = StatModifier.Categories.ARMOR.toString()
+                            it.subCategory = StatModifier.ArmorSubCategories.BASE_AC.toString()
                             it.value = 9
                         }
                 )
@@ -26,7 +56,8 @@ object PredefinedItemAsArmorManager {
                 it.isAbility = false
                 it.statModifiers = mutableListOf(
                         StatModifier().also {
-                            it.category = StatModifier.ArmorSubCategories.BASE_AC.toString()
+                            it.category = StatModifier.Categories.ARMOR.toString()
+                            it.subCategory = StatModifier.ArmorSubCategories.BASE_AC.toString()
                             it.value = 7
                         }
                 )
@@ -39,7 +70,8 @@ object PredefinedItemAsArmorManager {
                 it.isAbility = false
                 it.statModifiers = mutableListOf(
                         StatModifier().also {
-                            it.category = StatModifier.ArmorSubCategories.BASE_AC.toString()
+                            it.category = StatModifier.Categories.ARMOR.toString()
+                            it.subCategory = StatModifier.ArmorSubCategories.BASE_AC.toString()
                             it.value = 5
                         }
                 )
@@ -52,7 +84,8 @@ object PredefinedItemAsArmorManager {
                 it.isAbility = false
                 it.statModifiers = mutableListOf(
                         StatModifier().also {
-                            it.category = StatModifier.ArmorSubCategories.AC_BONUS_OR_PENALTY.toString()
+                            it.category = StatModifier.Categories.ARMOR.toString()
+                            it.subCategory = StatModifier.ArmorSubCategories.AC_BONUS_OR_PENALTY.toString()
                             it.value = -1
                         }
                 )

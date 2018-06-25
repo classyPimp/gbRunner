@@ -8,7 +8,6 @@ class RouteAdder(path: String, handler: ServletRequestHandler, root: PlainNode) 
     private val root = root
 
     fun add() {
-        println("adding parts: ${parts}")
         addTo(root)
     }
 

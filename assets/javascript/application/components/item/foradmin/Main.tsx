@@ -15,13 +15,13 @@ export class Main extends BaseReactComponent {
                             list items
                         </Link>
                     </li>
-                    <li>
+                    <li className="pure-menu-item">
                         <Link to="/item/manage/blueprint/index" className="pure-menu-link">
                             list blue prints
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/item/manage/new">
+                    <li className="pure-menu-item">
+                        <Link to="/item/manage/new" className="pure-menu-link">
                             creat new item from blueprint
                         </Link>
                     </li>

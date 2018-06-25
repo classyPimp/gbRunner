@@ -25,7 +25,7 @@ export class SideBar extends BaseReactComponent {
                 }
                 {CurrentUser.instance.hasRole("SUPER_USER") &&
                     <li className="pure-menu-item">
-                        <Link to="/item/management" className="pure-menu-link">
+                        <Link to="/item/manage" className="pure-menu-link">
                             item management
                         </Link>
                     </li>
