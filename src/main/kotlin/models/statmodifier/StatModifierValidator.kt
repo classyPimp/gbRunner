@@ -1,5 +1,7 @@
 package models.statmodifier
 
+import com.sun.javaws.exceptions.InvalidArgumentException
+import models.item.Item
 import orm.statmodifiergeneratedrepository.StatModifierValidatorTrait
 
 class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(model, model.record.validationManager) {
@@ -8,37 +10,95 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
         //
     }
 
-    fun whenItemForAdminCreateScenario() {
+    fun whenItemForAdminCreateScenario(itemCategory: Item.Categories?) {
         validateCategory()
         validateSubCategory()
         ensureIsBluePrint()
+        validateThatCategoryIsAppropriateForItemCategory(itemCategory)
     }
 
     private fun validateCategory() {
-        val category = StatModifier.Categories.valueOf(model.category!!)
+        model.category.let {
+            if (it == null || it.isBlank()) {
+                validationManager.addCategoryError("should be set")
+                return
+            }
+            try {
+                StatModifier.Categories.valueOf(it)
+            } catch (error: InvalidArgumentException) {
+                validationManager.addCategoryError("no such category exists")
+            }
+        }
     }
 
     private fun validateSubCategory() {
-        val category = StatModifier.Categories.valueOf(model.category!!)
-        val subCategory = model.subCategory!!
-        when (category) {
-            StatModifier.Categories.ATTACK -> {
-                StatModifier.AttackSubCategories.valueOf(subCategory)
+        if (model.category.isNullOrBlank()) {
+            return
+        }
+        val category: StatModifier.Categories
+        try {
+             category = StatModifier.Categories.valueOf(model.category!!)
+        } catch (error: InvalidArgumentException) {
+             return
+        }
+
+        val subCategory = model.subCategory
+
+        if (subCategory == null || subCategory.isBlank()) {
+            validationManager.addSubCategoryError("should be set")
+            return
+        }
+        try {
+            when (category) {
+                StatModifier.Categories.ATTACK -> {
+                    StatModifier.AttackSubCategories.valueOf(subCategory)
+                }
+                StatModifier.Categories.ARMOR -> {
+                    StatModifier.AttackSubCategories.valueOf(subCategory)
+                }
+                StatModifier.Categories.SAVING_THROW_PENALTY -> {
+                    StatModifier.SavingThrowPenaltySubCategories.valueOf(subCategory)
+                }
             }
-            StatModifier.Categories.ARMOR -> {
-                StatModifier.AttackSubCategories.valueOf(subCategory)
-            }
-            StatModifier.Categories.SAVING_THROW_PENALTY -> {
-                StatModifier.SavingThrowPenaltySubCategories.valueOf(subCategory)
-            }
+        } catch (error: InvalidArgumentException) {
+            validationManager.addSubCategoryError("no such sub category exists")
         }
     }
 
     private fun ensureIsBluePrint() {
-        val isBlueprint = model.isBlueprint
-        if (isBlueprint == null) {
-            throw IllegalStateException()
+        val isBlueprint = model.isBlueprint ?: throw IllegalStateException()
+    }
+
+    private fun validateThatCategoryIsAppropriateForItemCategory(itemCategory: Item.Categories?) {
+        if (model.category.isNullOrBlank()
+                || itemCategory == null
+        ) {
+            return
         }
+        val category: StatModifier.Categories
+        try {
+            category = StatModifier.Categories.valueOf(model.category!!)
+        } catch (error: InvalidArgumentException) {
+            return
+        }
+
+        when (itemCategory) {
+            Item.Categories.WEAPON -> {
+                if (category != StatModifier.Categories.ATTACK) {
+                    validationManager.addCategoryError("invalid category for weapon item")
+                    return
+                }
+            }
+            Item.Categories.ARMOR -> {
+                if (category != StatModifier.Categories.ARMOR || category != StatModifier.Categories.SAVING_THROW_PENALTY) {
+                    validationManager.addCategoryError("invalid category for armor")
+                }
+            }
+            else -> {
+
+            }
+        }
+
     }
 
 }

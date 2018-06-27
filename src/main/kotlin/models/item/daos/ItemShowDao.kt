@@ -26,5 +26,13 @@ object ItemShowDao {
                 .executeGetFirstOrNull()
     }
 
+    fun alreadyExistsWith(name: String): Boolean {
+        ItemRecord.GET()
+                .where(table.NAME.eq(name))
+                .executeGetFirstOrNull().let {
+                    return it != null
+                }
+    }
+
 
 }

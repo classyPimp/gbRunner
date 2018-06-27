@@ -45,7 +45,6 @@ class ItemForAdminController(context: ServletRequestContext) : ApplicationContro
         renderJson(
                 ItemForAdminIndexToJsonSerializer.onSuccess(items)
         )
-
     }
 
 }
