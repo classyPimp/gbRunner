@@ -8,6 +8,7 @@ import java.nio.file.Files
 /**
  * Created by Муса on 26.01.2018.
  */
+
 abstract class FileProperty {
 
     private var operationType = OperationTypes.DO_NOTHING

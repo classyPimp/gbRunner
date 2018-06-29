@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
  */
 class ServletRequestParamtersWrapper(
         val multiPartFormDataParametersParser: IRequestParametersParser,
-        val jsonParametersParser: JsonParametersParser
+        val jsonParametersParser: IRequestParametersParser
 ) {
     val applicationJson: String = "application/json"
 
