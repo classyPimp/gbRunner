@@ -1,6 +1,5 @@
 package models.statmodifier
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import models.item.Item
 import orm.statmodifiergeneratedrepository.StatModifierValidatorTrait
 
@@ -25,7 +24,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
             }
             try {
                 StatModifier.Categories.valueOf(it)
-            } catch (error: InvalidArgumentException) {
+            } catch (error: IllegalArgumentException) {
                 validationManager.addCategoryError("no such category exists")
             }
         }
@@ -38,7 +37,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
         val category: StatModifier.Categories
         try {
              category = StatModifier.Categories.valueOf(model.category!!)
-        } catch (error: InvalidArgumentException) {
+        } catch (error: IllegalArgumentException) {
              return
         }
 
@@ -60,7 +59,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
                     StatModifier.SavingThrowPenaltySubCategories.valueOf(subCategory)
                 }
             }
-        } catch (error: InvalidArgumentException) {
+        } catch (error: IllegalArgumentException) {
             validationManager.addSubCategoryError("no such sub category exists")
         }
     }
@@ -78,7 +77,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
         val category: StatModifier.Categories
         try {
             category = StatModifier.Categories.valueOf(model.category!!)
-        } catch (error: InvalidArgumentException) {
+        } catch (error: IllegalArgumentException) {
             return
         }
 

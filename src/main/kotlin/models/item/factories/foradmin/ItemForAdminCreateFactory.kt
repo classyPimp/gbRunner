@@ -7,7 +7,7 @@ import models.statmodifier.factories.StatModifierWhenItemForAdminCreateFactory
 object ItemForAdminCreateFactory {
     fun create(params: ItemRequestParametersWrapper, itemBlueprint: Item): Item {
         return Item().also {
-            it.bluePrintId = itemBlueprint.id
+            it.blueprintId = itemBlueprint.id
             it.isBlueprint = false
             it.category = itemBlueprint.category
             it.subcategory = itemBlueprint.subcategory

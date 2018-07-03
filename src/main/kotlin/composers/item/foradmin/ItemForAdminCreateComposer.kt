@@ -7,6 +7,7 @@ import models.item.ItemRequestParametersWrapper
 import models.item.ItemValidator
 import models.item.daos.ItemDaos
 import models.item.factories.foradmin.ItemForAdminCreateFactory
+import models.item.tojsonserializers.foradmin.ItemForAdminCreateToJsonSerializer
 import models.itemblueprint.ItemBlueprint
 import orm.services.ModelInvalidError
 import orm.utils.TransactionRunner
@@ -61,6 +62,10 @@ class ItemForAdminCreateComposer(
     }
 
     override fun compose(){
+        println("compose")
+        println(
+                ItemForAdminCreateToJsonSerializer.onSuccess(itemToCreate)
+        )
         TransactionRunner.run {
             val tx = it.inTransactionDsl
             itemToCreate.record.saveCascade(tx)

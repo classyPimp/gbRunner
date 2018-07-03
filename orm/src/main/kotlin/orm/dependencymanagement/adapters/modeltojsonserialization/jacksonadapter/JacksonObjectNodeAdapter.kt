@@ -19,7 +19,12 @@ class JacksonObjectNodeAdapter(val objectNode: ObjectNode): IObjectNode
     }
 
     override fun set(key: String, value: Long?) {
-        objectNode.put(key, value)
+        if (value == null) {
+            objectNode.set(key, value)
+
+        } else {
+            objectNode.put(key, value)
+        }
     }
 
     override fun set(key: String, value: Nothing?) {
@@ -31,7 +36,11 @@ class JacksonObjectNodeAdapter(val objectNode: ObjectNode): IObjectNode
     }
 
     override fun set(key: String, value: String?) {
-        objectNode.put(key, value)
+        if (value == null) {
+            objectNode.set(key, null)
+        } else {
+            objectNode.put(key, value)
+        }
     }
 
     override fun toString(): String {

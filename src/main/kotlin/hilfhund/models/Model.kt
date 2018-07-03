@@ -180,9 +180,13 @@ class TableField(json: JsonNode? = null, model: Model) {
     var decapitalizedFieldType: String? = null
     var jsType: String? = null
     var jooqTableFieldName: String? = null
+    var capitalizedName: String? = null
     init {
         json?.let {
             name = it.get("name")?.asText()
+            capitalizedName = name?.let {
+                it[0].toUpperCase() + it.substring(1)
+            }
             isPrimaryKey = it.get("isPrimaryKey")?.asBoolean()
             type = it.get("type")?.asText()
         }
@@ -247,6 +251,7 @@ class Associated(json: JsonNode? = null, model: Model) {
     var errors: MutableMap<String, MutableList<String>>? = null
     var pluralClassName: String? = null
     var property: String? = null
+    var capitalizedPropertyName: String? = null
 
     init {
         json?.let {
@@ -258,17 +263,15 @@ class Associated(json: JsonNode? = null, model: Model) {
             associationType = it.get("associationType")?.asText()
             fieldOnThis = it.get("fieldOnThis")?.asText()
             fieldOnThat = it.get("fieldOnThat")?.asText()
-            println("-------")
-            println(it.get("pluralClassName")?.asText() != null)
-            println(it.get("pluralClassName")?.asText() != "")
-            println(it.get("pluralClassName")?.asText())
             if (it.get("pluralClassName")?.asText() != null && it.get("pluralClassName")?.asText() != "") {
                 pluralClassName = it.get("pluralClassName")?.asText()
             } else {
                 pluralClassName = className + "s"
             }
             property = it.get("property")?.asText()
-
+            capitalizedPropertyName = property?.let {
+                it[0].toUpperCase() + it.substring(1)
+            }
             model.associatedTypesToImport.find {
                 it.className == this.className
             } ?: model.associatedTypesToImport.add(this)

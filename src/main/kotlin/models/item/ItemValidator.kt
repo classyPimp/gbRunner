@@ -1,6 +1,5 @@
 package models.item
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import models.item.daos.ItemDaos
 import models.statmodifier.StatModifierValidator
 import orm.itemgeneratedrepository.ItemValidatorTrait
@@ -29,7 +28,7 @@ class ItemValidator(model: Item) : ItemValidatorTrait(model, model.record.valida
     @Deprecated("was going to use but cancelled, leaving be")
     private fun validateIsClonedProperly(itemBlueprint: Item) {
         if (
-                model.bluePrintId != itemBlueprint.id
+                model.blueprintId != itemBlueprint.id
             || model.category != itemBlueprint.category
             || model.isAbility != itemBlueprint.isAbility
             || model.subcategory != itemBlueprint.subcategory
@@ -97,7 +96,7 @@ class ItemValidator(model: Item) : ItemValidatorTrait(model, model.record.valida
     }
 
     private fun validateBlueprintId() {
-        val blueprintId = model.bluePrintId
+        val blueprintId = model.blueprintId
         if (blueprintId == null) {
             throw IllegalStateException()
         }
@@ -119,7 +118,7 @@ class ItemValidator(model: Item) : ItemValidatorTrait(model, model.record.valida
         try {
             Item.Categories.valueOf(category)
         } catch (error: IllegalArgumentException) {
-            throw IllegalStateException("no such category")
+            throw IllegalStateException("no such category ${category}")
         }
     }
 
@@ -129,8 +128,12 @@ class ItemValidator(model: Item) : ItemValidatorTrait(model, model.record.valida
             validationManager.addSubcategoryError("should be set")
             return
         }
-        val category = Item.Categories.valueOf(model.category!!)
-
+        val category: Item.Categories
+        try {
+            category = Item.Categories.valueOf(model.category!!)
+        } catch (error: IllegalArgumentException) {
+            throw IllegalStateException("no such category ${model.subcategory}")
+        }
         when (category) {
             Item.Categories.WEAPON -> {
                 Item.WeaponSubCategories.valueOf(subCategory)
@@ -149,8 +152,8 @@ class ItemValidator(model: Item) : ItemValidatorTrait(model, model.record.valida
         if (!model.category.isNullOrBlank()) {
             try {
                 category = Item.Categories.valueOf(model.category!!)
-            } catch (error: InvalidArgumentException) {
-
+            } catch (error: IllegalArgumentException) {
+                println("no such category ${model.category}")
             }
         }
 

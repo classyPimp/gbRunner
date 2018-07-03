@@ -62,7 +62,7 @@ export class StatModifier extends BaseModel {
       this.afterIndexRequest(options)
     }
 
-    @Route("GET", {url: "/api/stat-modifier/category/form-feed/attack-subcategory"})
+    @Route("GET", {url: "/api/stat-modifier/category/form-feed/armor-subcategory"})
     static categoryAsArmorSubcategoryFormFeedIndex: (options?: RequestOptions) => Promise<ModelCollection<StatModifier>>
 
     static afterCategoryAsArmorSubcategoryFormFeedIndexRequest(options: RequestOptions) {

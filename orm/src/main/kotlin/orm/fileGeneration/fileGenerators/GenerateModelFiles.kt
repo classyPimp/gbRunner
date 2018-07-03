@@ -51,6 +51,8 @@ object GenerateModelFiles {
 
         GenerateModelValidatorTrait(modelDataModel).run()
 
+        GenerateStringifiedNameForProperty(modelDataModel).run()
+
     }
 
     fun generate(modelDataModels: MutableCollection<ModelDataModel>) {

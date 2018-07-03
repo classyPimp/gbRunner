@@ -122,6 +122,9 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
           <button onClick={this.addStatModifier}>
             add stat modifier
           </button>
+          <button onClick={this.submit}>
+            create item
+          </button>
         </div>
     }
 
@@ -208,6 +211,7 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
 
     @autobind
     buildItemFromBluePrint(blueprintItem: Item) {
+      blueprintItem.blueprintId = blueprintItem.id
       blueprintItem.id = null
       blueprintItem.reactKey = this.reactKeyTracker += 1
       blueprintItem.statModifiers.forEach((it)=>{
@@ -231,6 +235,18 @@ export class New extends MixinFormableTrait(BaseReactComponent) {
     handleStatModifierCategorySelect(value: any, statModifier: StatModifier) {
       statModifier.category = value
       this.forceUpdate()
+    }
+
+    @autobind
+    submit() {
+      this.collectInputs()
+      this.state.item.forAdminCreate().then((item)=>{
+        if (item.isValid()) {
+          alert("created successfully")
+          return
+        } 
+        this.setState({item})
+      })
     }
 
 }

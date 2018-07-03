@@ -62,7 +62,6 @@ export class DropDownSelectServerFed extends BaseReactComponent<IFormElementProp
     prepareOptions(modelsToWrapAsOptions: ModelCollection<BaseModel>) {
       let options = modelsToWrapAsOptions.array.map((it)=>{
         if (this.props.preselected) {
-          console.log(this.props.preselected + "===" + it.properties[this.props.propertyToSelect])
           if (this.props.preselected === it.properties[this.props.propertyToSelect]) {
             let preselected = new BaseModelSelectChoiseWrapper(it, this.props.propertyToShow, this.props.propertyToSelect, true)
             this.state.currentlySelected = preselected

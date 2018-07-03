@@ -23,4 +23,5 @@ object TemplateFilePathsConfig {
     val modelValidationManager = "model/validationManager.ftl"
     val modelValidatorTrait = "model/validatorTrait.ftl"
     val modelToJsonSerializer = "model/toJsonSerializer.ftl"
+    val modelStringifiedNameForProperty = "model/stringifiedNameForProperty.ftl"
 }

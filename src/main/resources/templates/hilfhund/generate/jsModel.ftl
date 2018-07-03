@@ -16,27 +16,38 @@ export class ${className} extends BaseModel {
     @Property
     id: number
 
+    stringifiedNameForId = "id"
+
     @Property
     updatedAt: string
+
+    stringifiedNameForUpdatedAt = "updatedAt"
 
     @Property
     createdAt: string
 
+    stringifiedNameForCreatedAt: string
+
     <#list tableFields as tableField>
     @Property
     ${tableField.name}: ${tableField.jsType}
+    stringifiedNameFor${tableField.capitalizedName} = "${tableField.name}"
+
     </#list>
 
     <#list associatedModels as associated>
     <#if associated.associationType == "HasMany" || associated.associationType == "HasManyAsPolymorphic">
         @HasMany("${associated.className}")
         ${associated.property}: ModelCollection<${associated.className}>
+        stringifiedNameFor${associated.capitalizedPropertyName} = "${associated.property}"
     <#elseif associated.associationType == "HasOne" || associated.associationType == "HasOneAsPolymorphic">
         @HasOne("${associated.className}")
         ${associated.property}: ${associated.className}
+        stringifiedNameFor${associated.capitalizedPropertyName} = "${associated.property}"
     <#elseif associated.associationType == "BelongsTo" || associated.associationType == "BelongsToPolymorphic">
         @HasOne("${associated.className}")
         ${associated.property}: ${associated.className}
+        stringifiedNameFor${associated.capitalizedPropertyName} = "${associated.property}"
     </#if>
     </#list>
 

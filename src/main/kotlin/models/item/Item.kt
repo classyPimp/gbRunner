@@ -78,7 +78,7 @@ class Item {
     var isAbility: Boolean? = null
 
     @TableField(name = "BLUEPRINT_ID")
-    var bluePrintId: Long? = null
+    var blueprintId: Long? = null
 
     @TableField(name = "CAMPAIGN_ID")
     var campaignId: Long? = null
