@@ -53,7 +53,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
                     StatModifier.AttackSubCategories.valueOf(subCategory)
                 }
                 StatModifier.Categories.ARMOR -> {
-                    StatModifier.AttackSubCategories.valueOf(subCategory)
+                    StatModifier.ArmorSubCategories.valueOf(subCategory)
                 }
                 StatModifier.Categories.SAVING_THROW_PENALTY -> {
                     StatModifier.SavingThrowPenaltySubCategories.valueOf(subCategory)
@@ -89,7 +89,7 @@ class StatModifierValidator(model: StatModifier) : StatModifierValidatorTrait(mo
                 }
             }
             Item.Categories.ARMOR -> {
-                if (category != StatModifier.Categories.ARMOR || category != StatModifier.Categories.SAVING_THROW_PENALTY) {
+                if (category != StatModifier.Categories.ARMOR && category != StatModifier.Categories.SAVING_THROW_PENALTY) {
                     validationManager.addCategoryError("invalid category for armor")
                 }
             }

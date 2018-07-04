@@ -25,11 +25,15 @@ class ItemForAdminController(context: ServletRequestContext) : ApplicationContro
         val composer = ItemForAdminCreateComposer(requestParams())
 
         composer.onError = {
-            ItemForAdminCreateToJsonSerializer.onError(it)
+            renderJson(
+                ItemForAdminCreateToJsonSerializer.onError(it)
+            )
         }
 
         composer.onSuccess = {
-            ItemForAdminCreateToJsonSerializer.onSuccess(it)
+            renderJson(
+                ItemForAdminCreateToJsonSerializer.onSuccess(it)
+            )
         }
 
         composer.run()
